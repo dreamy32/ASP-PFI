@@ -257,7 +257,7 @@ namespace MySpace.Controllers
                     return RedirectToAction("EmailChangedAlert");
                 }
                 else
-                    return RedirectToAction("Index", "Photos");
+                    return RedirectToAction("Index", "Application");
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
             return View(currentUser);

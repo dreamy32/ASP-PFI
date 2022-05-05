@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="283cb6e1ac5b473c97ef922b12f9295a" Name="Diagram1">
+        <EntityTypeShape EntityType="MySpaceDBModel.FriendShip" Width="1.5" PointX="0.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Gender" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Login" Width="1.5" PointX="4.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.ResetPasswordCommand" Width="1.5" PointX="2.625" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.UnverifiedEmail" Width="1.5" PointX="4.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.User" Width="1.5" PointX="2.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.UserType" Width="1.5" PointX="0.625" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Users__GenderId__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Logins__UserId__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Users__UserTypeI__35BCFE0A" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

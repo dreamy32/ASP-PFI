@@ -1,0 +1,50 @@
+﻿
+@model IEnumerable<MySpace.Models.FriendShipState>
+
+@foreach (var item in Model)
+{
+    <div style="display:grid; grid-template-columns: 240px 250px">
+        <div>@Helper.AvatarUser(item.TargetUser)</div>
+        <div>
+
+            @{
+                if (!item.TargetUser.Blocked)
+                {
+                    switch (item.Status)
+                    {
+                        case 0: /* not friend*/
+                            @Helper.GlyphiconConfirmCommand("SendFriendShipRequest" + "?targetUserId=" + item.TargetUser.Id, "partialRefresh.command", "glyphicon-gold glyphicon glyphicon-plus", "Envoyer une demande d'amitié à " + item.TargetUser.GetFullName())
+                            break;
+
+                        case 1: /* friend*/
+                            @Helper.GlyphiconConfirmCommand("RemoveFriendShipRequest" + "?targetUserId=" + item.TargetUser.Id, "partialRefresh.command", "glyphicon-green glyphicon-minus-sign", "Retirer l'amitié avec " + item.TargetUser.GetFullName())
+                            break;
+                        case 2: /* friendship declined*/
+                            @Helper.GlyphiconNoAction("glyphicon-red glyphicon glyphicon-remove-sign", "Votre demande d'amitié avec " + item.TargetUser.GetFullName() + " a été déclinée")
+                            break;
+                        case 3: /* friendship pending*/
+                            @Helper.GlyphiconConfirmCommand("RemoveFriendShipRequest" + "?targetUserId=" + item.TargetUser.Id, "partialRefresh.command", "glyphicon-red glyphicon-minus", "Retirer la demande d'amitié à " + item.TargetUser.GetFullName())
+                            break;
+                        case 4: /* friendship declined*/
+                            <div style="display:grid; grid-template-columns: 30px 30px">
+                                @Helper.GlyphiconNoAction("glyphicon-red glyphicon glyphicon-remove", "Vous avez décliné de la demande d'amitié")
+                                @Helper.GlyphiconConfirmCommand("SendFriendShipRequest" + "?targetUserId=" + item.TargetUser.Id, "partialRefresh.command", "glyphicon-gold glyphicon glyphicon-plus", "Envoyer une demande d'amitié à " + item.TargetUser.GetFullName())
+                            </div>
+                            break;
+                        case 5: /* friendship request*/
+                            <div style="display:grid; grid-template-columns: 30px 30px">
+                                @Helper.GlyphiconConfirmCommand("AcceptFriendShipRequest" + "?targetUserId=" + item.TargetUser.Id, "partialRefresh.command", "glyphicon-green glyphicon glyphicon-ok", "Accepter la demande d'amitié " + item.TargetUser.GetFullName())
+                                @Helper.GlyphiconConfirmCommand("DeclineFriendShipRequest" + "?targetUserId=" + item.TargetUser.Id, "partialRefresh.command", "glyphicon-red glyphicon-remove", "Décliner la demande d'amitié " + item.TargetUser.GetFullName())
+                            </div>
+                            break;
+                        default: break;
+                    }
+                }
+                else
+                {
+                    @Helper.GlyphiconNoAction("glyphicon-red glyphicon glyphicon-ban-circle", "L'usager " + item.TargetUser.GetFullName() + " a été blocqué par l'administrateur.")
+                }
+            }
+        </div>
+    </div>
+}

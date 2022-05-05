@@ -1,0 +1,54 @@
+﻿@{
+    MySpace.Models.User currentUser = MySpace.Models.OnlineUsers.GetSessionUser();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div >
+        <div style="background-color:blue; height:55px; margin-top:-50px; padding-top:15px;padding-left:10px;">
+            @if (currentUser != null)
+            {
+                @Helper.AvatarProfilLink(currentUser)
+            }
+            <div style="padding-left:10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); grid-auto-rows: minmax(35px, auto); ">
+                @Helper.GlyphiconControllerAction("Application", "Index", "menu-Icon glyphicon-asterisk", "Retour à la liste des photos")
+                @if (currentUser == null)
+                {
+                    @Helper.GlyphiconControllerAction("Accounts", "Login", "menu-Icon glyphicon-log-in", "Se connecter...")
+                }
+                else
+                {
+                    if (currentUser.IsAdmin)
+                    {
+                        @Helper.GlyphiconControllerAction("Accounts", "UserList", "menu-Icon glyphicon-user", "Gestion des usagers")
+                        @Helper.GlyphiconControllerAction("Accounts", "GroupEmail", "menu-Icon glyphicon-envelope", "Courriel...")
+                        @Helper.GlyphiconControllerAction("Accounts", "LoginsJournal", "menu-Icon glyphicon-calendar", "Journal des connexions...")
+                    }
+                    @Helper.GlyphiconControllerAction("FriendShips", "Index", "menu-Icon glyphicon-heart", "Amitiés...")
+
+                    @Helper.GlyphiconControllerAction("Accounts", "Logout", "menu-Icon glyphicon-log-out", "Se déconnecter...")
+                }
+                @Helper.GlyphiconControllerAction("Home", "About", "menu-Icon glyphicon-info-sign", "À propos...")
+
+            </div>
+        </div>
+    </div>
+   
+    <br />
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

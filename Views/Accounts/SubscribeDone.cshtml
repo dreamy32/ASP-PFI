@@ -1,0 +1,19 @@
+﻿@model MySpace.Models.User
+
+@{
+    ViewBag.Title = "SubscribeDone";
+}
+
+<h2>Inscription réussie</h2>
+<hr />
+<div style="font-size:18px">
+    Bonjour @Model.GetFullName(true),
+    <br /><br />
+    Votre inscription a été enregistrée.
+    <br /><br />
+    Vous allez recevoir un courriel qui contiendra le lien vers la confirmation de votre adresse de courriel.
+    <br /><br />
+    Merci et bonne journée,
+    <br /><br />
+    Webmestre
+</div>

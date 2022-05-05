@@ -1,0 +1,20 @@
+﻿@model MySpace.Models.User
+
+@{
+    ViewBag.Title = "VerifyDone";
+}
+
+<h2>Vérification réussie</h2>
+<hr />
+<div style="font-size:18px">
+    Bonjour @Model.GetFullName(true),
+    <br /><br />
+    Votre adresse de courriel est maintenant vérifiée.
+    <br /><br />
+    Cliquez sur le lien ci-dessous pour vous connecter.
+    <br /><br />
+    Merci et bonne journée,
+    <br /><br />
+    Webmestre
+</div>
+@Html.ActionLink("Connexion", "Login")

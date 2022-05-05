@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MySpace.Models.Login>
+@{
+    int currentDay = 0;
+    var loggedUsersId = (List<int>)ViewBag.LoggedUsersId;
+
+    foreach (var login in Model)
+    {
+        DateTime LoginDateLT = login.LoginDate.Subtract(new TimeSpan((int)Session["TimeZoneOffset"], 0, 0));
+        DateTime LogoutDateLT = login.LogoutDate.Subtract(new TimeSpan((int)Session["TimeZoneOffset"], 0, 0));
+        if (login.LoginDate.Day != currentDay)
+        {
+            currentDay = login.LoginDate.Day;
+            string deleteAction = "DeleteJournalDay" + "?day=" + login.LoginDate.ToShortDateStringFRCA().Trim();
+            <hr />
+            <div style="display:grid; grid-template-columns:80px 30px">
+                @LoginDateLT.ToShortDateStringFRCA()
+                @Helper.GlyphiconConfirmCommand(deleteAction, "partialRefresh.command", "glyphicon-remove-circle", "Effacer la journée du " + LoginDateLT.ToShortDateStringFRCA())
+            </div>
+            <hr />
+        }
+        <div style="display: grid; grid-template-columns: 250px 40px 60px ">
+            <div style="margin-top:2px;">
+                @Helper.AvatarUser(login.User)
+            </div>
+            <div style="margin-top:2px;">
+                @LoginDateLT.ToShortTimeStringFRCA()
+            </div>
+
+            @if (login.LoginDate != login.LogoutDate)
+            {
+                <div style="margin-top:2px;">&nbsp;:&nbsp;@LogoutDateLT.ToShortTimeStringFRCA()</div>
+            }
+            else
+            {
+                if (loggedUsersId.Contains(login.User.Id))
+                {
+                    loggedUsersId.Remove(login.User.Id);
+                    <div title="Est en ligne en ce moment">&nbsp;:&nbsp; @Helper.OnLineStatusIcon(true, false)</div>
+                }
+                else
+                {
+                    <div title="Session expirée">&nbsp;:&nbsp; @Helper.TimeOutIcon()</div>
+                }
+            }
+        </div>
+    }
+}

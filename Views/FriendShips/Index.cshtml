@@ -1,0 +1,17 @@
+﻿@{ ViewBag.Title = "Index"; }
+
+<h2>Amitiés</h2>
+<hr />
+<div id="FriendShipStatus">
+    <!-- Periodically refreshed -->
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/partialRefresh")
+
+    <script defer>
+        let partialRefresh = new PartialRefresh("@Url.Action("GetFriendShipsStatus")", "FriendShipStatus", 5);
+    </script>
+}
+

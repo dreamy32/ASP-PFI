@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MySpace.Models.Login>
+
+@{ ViewBag.Title = "LoginsJournal"; }
+
+<h2>Journal des connexions</h2>
+
+<div id="LoginsListContainer">
+    <!-- Periodically refreshed -->
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/partialRefresh")
+
+<script defer>
+    let partialRefresh = new PartialRefresh("@Url.Action("GetLoginsList")", "LoginsListContainer", 5);
+</script>
+}
+

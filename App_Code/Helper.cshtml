@@ -1,0 +1,249 @@
+﻿@helper ListToRadioButtonGroup(string name, System.Web.Mvc.SelectList options, int selectedValue)
+{foreach (System.Web.Mvc.SelectListItem option in options.Items)
+    {
+        string id = name + "_" + option.Value;
+
+        if (option.Value == selectedValue.ToString())
+        {
+            <input type="radio" name="@name" class="@name" id="@id" value="@option.Value" checked />
+        }
+        else
+        {
+            <input type="radio" name="@name" class="@name" id="@id" value="@option.Value" />
+        }
+        <label for="@id" class="control-label">@option.Text</label> }
+    <br />
+}
+
+@helper SelectList(string name, System.Web.Mvc.SelectList options, int selectedValue)
+{
+    <select class="form-control" id="@name" name="@name">
+        @foreach (System.Web.Mvc.SelectListItem option in options.Items)
+        {
+            if (option.Value == selectedValue.ToString())
+            {
+                <option value="@option.Value" selected>@option.Text</option>
+            }
+            else
+            {
+                <option value="@option.Value">@option.Text</option>
+            }
+        }
+    </select>
+}
+
+@helper GlyphiconNoAction(string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
+{
+    <span class="glyphicon glyphiconStyle @glyphiconClass"
+          title="@TooltipMessage"
+          data-placement="@ToolTipPlacement">
+    </span>
+}
+
+@helper GlyphiconAction(string Action, string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
+{glyphiconClass += " glyphicon-active";
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    <a href="@Url.Action(Action)" style="text-decoration:none">
+        <span class="glyphicon glyphiconStyle @glyphiconClass"
+              title="@TooltipMessage"
+              data-placement="@ToolTipPlacement">
+        </span>
+    </a>
+}
+
+@helper GlyphiconControllerAction(string Controller, string Action, string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
+{glyphiconClass += " glyphicon-active";
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    <a href="@Url.Action(Action, Controller)" style="text-decoration:none">
+        <span class="glyphicon glyphiconStyle @glyphiconClass"
+              title="@TooltipMessage"
+              data-placement="@ToolTipPlacement">
+        </span>
+    </a>
+}
+
+@helper GlyphiconConfirmAction(string Action, string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
+{glyphiconClass += " glyphicon-active";
+    //// http://bootboxjs.com/documentation.html#bb-confirm
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var root = Url.Action("/");
+    var action = root + Action;
+    <div onclick='bootbox.confirm("@TooltipMessage", function(result){ if (result) window.location = "@action"; })'>
+        <span class="glyphicon glyphiconStyle @glyphiconClass"
+              title="@TooltipMessage"
+              data-placement="@ToolTipPlacement">
+        </span>
+    </div>
+}
+
+@helper GlyphiconConfirmCommand(string url, string method, string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
+{
+    glyphiconClass += " glyphicon-active";
+    string javascript = "function(result) { if (result) " + method + "('" + url + "') }";
+    <div onclick='bootbox.confirm("@TooltipMessage", @javascript)'>
+        <span class="glyphicon glyphiconStyle @glyphiconClass"
+              title="@TooltipMessage"
+              data-placement="bottom">
+        </span>
+    </div>
+}
+
+@helper BoolToValue(bool b, string falseText = "non", string trueText = "oui")
+{if (b)
+    {
+        @trueText }
+    else
+    {
+        @falseText}
+}
+
+@helper DateTimeControl(DateTime dateTime, string Id)
+{string date = dateTime.ToShortDateString() + "T" + dateTime.ToShortTimeString();
+    <input type="datetime-local" name="@Id" id="@Id" value="@date" class="form-control" />
+}
+
+@helper When(DateTime date)
+{
+    TimeSpan span = DateTime.Now.Subtract(date);
+    DateTime localTime = date.Subtract(new TimeSpan((int)Session["TimeZoneOffset"], 0, 0));
+    if (span.Days > 0)
+    {
+        <div style="display:grid; grid-template-columns:auto 30px;">
+            <div>@localTime.ToLongDateString()&nbsp;</div>
+            <div class="glyphicon glyphicon-time smallGlyphicon" title="@localTime.ToShortTimeString()" data-placement="right"></div>
+        </div>
+    }
+    else
+    {
+        if (span.Hours > 1)
+        {
+            <span>Il y a @span.Hours heures</span> }
+        else
+        {
+            if (span.Minutes > 1)
+            {
+                <span>Il y a @span.Minutes minutes</span> }
+            else
+            {
+                <span>à l'instant</span>}
+        }
+    }
+}
+
+@helper ImageUploader(int id, string imageSrc, string controlId = "ImageControl", string waitingImage = "", string TooltipMessage = "", string ToolTipPlacement = "bottom")
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    imageSrc = Url.Content(imageSrc);
+    controlId = Url.Content(controlId);
+    waitingImage = Url.Content(waitingImage);
+    <div class='imageUploader' id='@id' controlId='@controlId' imageSrc='@imageSrc' waitingImage='@waitingImage'
+         data-toggle="tooltip"
+         data-placement="@ToolTipPlacement"
+         title="@TooltipMessage">
+    </div>
+}
+
+@helper AvatarProfilLink(MySpace.Models.User user)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var avatarUrl = Url.Content(user.GetAvatarURL());
+    var linkUrl = Url.Action("Profil", "Accounts");
+    <a href="@linkUrl" data-toogle="tooltip" title="Modifier le profil">
+        <div class="smallAvatar"
+             style="background: url(@avatarUrl) no-repeat center center; background-size: cover;"></div>
+    </a>
+}
+
+@helper AvatarUser(MySpace.Models.User user)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var avatarUrl = Url.Content(user.GetAvatarURL());
+    <div>
+        <div class="smallAvatar"
+             style="background: url(@avatarUrl) no-repeat center center; background-size: cover; float:left; border:1px solid black;"></div>
+        <div class="ellipsis" style="float:none;color:dimgray">&nbsp;@user.GetFullName()</div>
+    </div>
+    <br />
+}
+
+@helper UsersCheckList(IEnumerable<MySpace.Models.User> users, List<int> selectedUsers, string usersCheckListName = "UsersCheckList")
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+    <div style="display:grid; grid-template-columns:30px 300px;">
+        @foreach (var user in users)
+        {
+            var avatarUrl = Url.Content(user.GetAvatarURL());
+            string chekBoxId = usersCheckListName + "_" + user.Id.ToString();
+            if (selectedUsers.Contains(user.Id))
+            {
+                <input type="checkbox" name="@usersCheckListName" id="@chekBoxId" value="@user.Id" checked /> }
+            else
+            {
+                <input type="checkbox" name="@usersCheckListName" id="@chekBoxId" value="@user.Id" /> }
+            <label for="@chekBoxId" style=" height: 40px;">
+                <div class="smallAvatar" style="background: url(@avatarUrl) no-repeat center center; background-size: cover; float:left;"></div>
+                <div class="ellipsis" style="float:none;">&nbsp;@user.GetFullName()</div>
+            </label>}
+    </div>
+}
+
+@helper OnLineStatusIcon(bool onLine, bool blocked = false)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var icon = (onLine ? "~/Content/UI-icons/OnLine.png" : "~/Content/UI-icons/OffLine.png");
+    if (blocked)
+    {
+        icon = (onLine ? "~/Content/UI-icons/OnLine.png" : "~/Content/UI-icons/Masked.png");
+    }
+
+    var iconUrl = Url.Content(icon);
+    <img src="@iconUrl" class="small_icon" />
+}
+
+@helper TimeOutIcon()
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+    var iconUrl = Url.Content("~/Content/UI-icons/timeout.png");
+    <img src="@iconUrl" class="small_icon" />
+}
+
+@helper Checked(bool checkStatus)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    if (checkStatus)
+    {
+        <img src="@Url.Content("~/Content/UI-icons/Accept.png")" class="small_icon" />
+    }
+    else
+    {
+        <div></div>}
+}
+
+@helper UserTypeIcon(int genderId)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var icon = "";
+    var tooltip = "";
+    switch (genderId)
+    {
+        case 1: icon = "~/Content/UI-icons/admin.png"; tooltip = "Administrateur"; break;
+        case 2: icon = "~/Content/UI-icons/power user.png"; tooltip = "Usager prévilégié"; break;
+        default: icon = "~/Content/UI-icons/user.png"; tooltip = "Usager standard"; break;
+    }
+
+    var iconUrl = Url.Content(icon);
+    <img src="@iconUrl" class="medium_icon" title="@tooltip" />
+}
+
+@helper GenderIcon(int genderId)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var icon = "";
+    switch (genderId)
+    {
+        case 1: icon = "~/Content/UI-icons/male.png"; break;
+        case 2: icon = "~/Content/UI-icons/female.png"; break;
+        default: icon = "~/Content/UI-icons/neutral.png"; break;
+    }
+
+    var iconUrl = Url.Content(icon);
+    <img src="@iconUrl" class="small_icon" />
+}
+
+@helper Rating(string id, double value, bool readOnly = false, double scale = 2)
+{int roundedValue = (int)Math.Round(value);
+    <div class="rating" ratingId="@id" value="@roundedValue.ToString()" locked="@readOnly.ToString()" scale=@scale.ToString()></div>
+}

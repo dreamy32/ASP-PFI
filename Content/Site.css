@@ -1,0 +1,231 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select {
+    max-width: 280px;
+}
+
+    input[type=search]::-webkit-search-cancel-button {
+        -webkit-appearance: searchfield-cancel-button;
+    }
+
+textarea {
+    display: block;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    max-width: 255px;
+    min-width: 255px;
+}
+
+fieldset {
+    display: block;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-top: 40px;
+    border-radius: 6px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+    border: 1px solid lightgray;
+}
+
+legend {
+    position: absolute;
+    margin-top: -35px;
+    margin-left: 0px;
+    border: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: deepskyblue;
+}
+
+.formField {
+    width: 280px;
+}
+
+.UploadedImage {
+    max-width: 100%;
+}
+
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 25px;
+}
+
+.smallAvatar {
+    margin-top: -6px;
+    margin-right: 4px;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    float: left;
+}
+
+.mediumAvatar {
+    margin-right: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    float: left;
+}
+
+.userContainer {
+    display: grid;
+    grid-template-columns: 260px 100px 80px 80px 120px 80px 80px 80px;
+    height: 60px;
+}
+
+.CB_Blocked {
+    width: 18px;
+    height: 18px;
+}
+
+.small_icon {
+    height: 24px;
+}
+
+
+.medium_icon {
+    height: 32px;
+}
+
+.UploadedImage {
+    border: 2px solid white;
+}
+
+    .UploadedImage:hover {
+        border: 2px solid blue;
+    }
+
+.glyphiconStyle {
+    font-size: 18px;
+    color: #337ab7;
+}
+
+.glyphicon-green {
+    color: green;
+}
+
+.glyphicon-gold {
+    color: gold;
+}
+
+.glyphicon-red {
+    color: red;
+}
+
+.glyphicon-active {
+    cursor: pointer;
+}
+
+.changeAccess {
+    cursor: pointer;
+}
+
+div2 {
+    border: 1px solid red;
+}
+
+.menu-Icon{
+    color:aliceblue !important;
+}
+
+    .menu-Icon:hover {
+        color:aqua !important;
+    }
+
+.photosContainerGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    grid-auto-rows: minmax(120px, auto);
+}
+
+.photoContainer {
+    padding: 5px;
+    border: 3px solid white;
+    width: 180px;
+    height: 250px;
+}
+
+.photo {
+    text-align: center;
+    width: 165px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 145px;
+}
+
+.photoBig {
+    width: 100%;
+    height: 400px;
+}
+
+.imageUploaderContainer {
+    width: 280px;
+}
+
+.imageUploader {
+    width: 100%;
+}
+
+.PhotoDetailsLayout {
+    display: grid;
+    grid-template-columns: 65% 35%;
+}
+
+.PhotoRatingsContainer {
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 800px) {
+    .PhotoDetailsLayout {
+        display: block;
+    }
+}
+
+h2 {
+    color: deepskyblue;
+}
+
+.topMenu {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 50px;
+    width: 100%;
+    background-color: black;
+}
+
+.PageTitle {
+    font-size: 22px;
+    color: deepskyblue;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

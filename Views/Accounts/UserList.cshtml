@@ -1,0 +1,54 @@
+﻿@{ ViewBag.Title = "UserList"; }
+
+<h2>Liste des usagers</h2>
+<hr />
+<div class="userContainer" style="font-size:18px; font-weight:bold">
+    <div>Usager</div>
+    <div style="text-align:center">Connecté</div>
+    <div style="text-align:center">Droits</div>
+
+    <div style="text-align:center">Genre</div>
+    <div>Création</div>
+    <div style="text-align:center">Vérifié</div>
+    <div style="text-align:center">Bloqué</div>
+    <div></div>
+</div>
+
+<div id="UsersListContainer">
+    <!-- Periodically refreshed -->
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/partialRefresh")
+
+    <script defer>
+    let partialRefresh = new PartialRefresh("@Url.Action("GetUsersList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
+
+        function UpdateCheckboxChangeCallback() {
+            // renew checkbox change call back
+            $(".CB_Blocked").change(
+                function () {
+                    let userid = this.id.split('_')[1];
+                    let url = "@Url.Action("ChangeUserBlockedStatus")" + "?userid=" + userid + "&blocked=" + this.checked.toString();
+                    partialRefresh.command(url);
+                }
+            );
+
+            $(".changeAccess").click(
+                function () {
+                    let userid = $(this).attr('userId');
+                    let url = "@Url.Action("ChangeUserAccess")" + "?userid=" + userid;
+                    partialRefresh.command(url);
+                }
+            );
+            $(".EditProfil").click(
+                function () {
+                    let userid = $(this).attr('userId');
+                    let url = $(this).attr('url');
+                    window.location = url;
+                }
+            );
+        }
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@model MySpace.Models.GroupEmail
+@{
+    ViewBag.Title = "EmailGroup";
+}
+
+<h2>Envoi de courriel</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset style="width:275px">
+        <legend>Destinataires</legend>
+
+        <div style="margin-bottom:10px; display:grid; grid-template-columns:120px 10px 120px">
+            <button id="SelectAll">Tous</button>
+            <div></div>
+            <button id="DeSelectAll">Aucun</button>
+        </div>
+        <div style="overflow-y:scroll; overflow-x:hidden; border:1px solid #ccc; padding:10px; width:250px; height:200px;">
+            @Helper.UsersCheckList((IEnumerable<MySpace.Models.User>)ViewBag.Users, (List<int>)ViewBag.SelectedUsers, "SelectedUsers")
+        </div>
+        <div id="Error_SelectedUsers" style="display:none" class="text-danger">Veuillez faire une sélection</div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Courriel</legend>
+        @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Subject) } })
+        @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+        <br />
+        @Html.TextAreaFor(model => model.Message, 10, 350, new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Message) })
+        @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+
+    </fieldset>
+    <div class="form-group">
+        <input type="submit" value="Envoyer" class="btn btn-default" />
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script defer>
+        function validateSelection() {
+            let oneSelected = false;
+            $("input[type='checkbox'][name='SelectedUsers']").each(function () {
+                if ($(this).prop('checked')) oneSelected = true;
+            });
+            if (!oneSelected)
+                $("#Error_SelectedUsers").css("display", "inline");
+            else
+                $("#Error_SelectedUsers").css("display", "none");
+            return oneSelected;
+        }
+        $("input[type='checkbox'][name='SelectedUsers']").change(function () { validateSelection(); });
+
+        $("form").submit(function () {
+            return validateSelection();
+        })
+        $("#SelectAll").click(function () {
+            $("input[type='checkbox'][name='SelectedUsers']").each(function () { $(this).prop('checked', true) });
+            validateSelection();
+            return false; // prevent form submit
+        })
+        $("#DeSelectAll").click(function () {
+            $("input[type='checkbox'][name='SelectedUsers']").each(function () { $(this).prop('checked', false) });
+            validateSelection();
+            return false; // prevent form submit
+        })
+    </script>
+}

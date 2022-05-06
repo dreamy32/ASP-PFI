@@ -106,11 +106,14 @@ namespace MySpace.Models
             {
                 BeginTransaction(DB);
                 OnlineUsers.RemoveUser(userToDelete.Id);
+               
+                DB.DeleteFriendShips(userId);
+                DB.Logins.RemoveRange(DB.Logins.Where(l => l.UserId == userId));
+
                 userToDelete.RemoveAvatar();
                 DB.Users.Remove(userToDelete);
                 DB.SaveChanges();
-                DB.DeleteFriendShips(userId);
-                DB.Logins.RemoveRange(DB.Logins.Where(l => l.UserId == userId));
+
                 Commit();
                 return true;
             }

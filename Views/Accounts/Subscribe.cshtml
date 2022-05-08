@@ -18,54 +18,60 @@
     @Html.HiddenFor(model => model.Blocked)
     @Html.HiddenFor(model => model.Avatar)
 
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-        <fieldset class="formField">
-            <legend>Identification</legend>
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.FirstName) } })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            <br />
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.LastName) } })
-            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-        </fieldset>
+    <fieldset class="formField">
+        <legend>Identification</legend>
+        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.FirstName) } })
+        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        <br />
+        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.LastName) } })
+        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+    </fieldset>
 
-        <fieldset class="formField">
-            <legend>@Html.DisplayNameFor(model => model.AvatarImageData)</legend>
-            @Helper.ImageUploader(Model.Id, Model.GetAvatarURL(), "AvatarImageData", "~/ImagesData/Loading_icon.gif", "Cliquez pour choisir votre avatar")
-            @Html.ValidationMessageFor(model => model.AvatarImageData, "", new { @class = "text-danger" })
-        </fieldset>
+    <fieldset class="formField">
+        <legend>@Html.DisplayNameFor(model => model.AvatarImageData)</legend>
+        @Helper.ImageUploader(Model.Id, Model.GetAvatarURL(), "AvatarImageData", "~/ImagesData/Loading_icon.gif", "Cliquez pour choisir votre avatar")
+        @Html.ValidationMessageFor(model => model.AvatarImageData, "", new { @class = "text-danger" })
+    </fieldset>
 
-        <fieldset class="formField">
-            <legend>@Html.DisplayNameFor(model => model.GenderId)</legend>
-            @Helper.ListToRadioButtonGroup("GenderId", (SelectList)ViewBag.Genders, Model.GenderId)
-            @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
-        </fieldset>
+    <fieldset class="formField">
+        <legend>Type d'usager</legend>
+        @Helper.ListToRadioButtonGroup("UserTypeId", (SelectList)ViewBag.UserTypes, Model.UserTypeId)
+        @Html.ValidationMessageFor(model => model.UserTypeId, "", new { @class = "text-danger" })
+    </fieldset>
 
-        <fieldset class="formField">
-            <legend>@Html.DisplayNameFor(model => model.Email)</legend>
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Email) } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            <br />
-            @Html.EditorFor(model => model.ConfirmEmail, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.ConfirmEmail) } })
-            @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new { @class = "text-danger" })
-        </fieldset>
+    <fieldset class="formField">
+        <legend>@Html.DisplayNameFor(model => model.GenderId)</legend>
+        @Helper.ListToRadioButtonGroup("GenderId", (SelectList)ViewBag.Genders, Model.GenderId)
+        @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
+    </fieldset>
 
-        <fieldset class="formField">
-            <legend>@Html.DisplayNameFor(model => model.Password)</legend>
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Password) } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            <br />
-            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.ConfirmPassword) } })
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-        </fieldset>
+    <fieldset class="formField">
+        <legend>@Html.DisplayNameFor(model => model.Email)</legend>
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Email) } })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        <br />
+        @Html.EditorFor(model => model.ConfirmEmail, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.ConfirmEmail) } })
+        @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new { @class = "text-danger" })
+    </fieldset>
+
+    <fieldset class="formField">
+        <legend>@Html.DisplayNameFor(model => model.Password)</legend>
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Password) } })
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        <br />
+        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.ConfirmPassword) } })
+        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+    </fieldset>
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Soumettre" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Soumettre" class="btn btn-default" />
         </div>
     </div>
+</div>
 }
 
 <div>

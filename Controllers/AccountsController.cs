@@ -34,6 +34,7 @@ namespace MySpace.Controllers
         public ActionResult Subscribe()
         {
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
             User user = new User();
             return View(user);
         }
@@ -47,6 +48,7 @@ namespace MySpace.Controllers
                 return RedirectToAction("SubscribeDone/" + user.Id.ToString());
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+                        ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
             return View(user);
         }
         public ActionResult SubscribeDone(int id)
@@ -227,6 +229,7 @@ namespace MySpace.Controllers
         public ActionResult Profil()
         {
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+                        ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
             return View(OnlineUsers.GetSessionUser());
         }
 
@@ -260,6 +263,7 @@ namespace MySpace.Controllers
                     return RedirectToAction("Index", "Application");
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+                        ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
             return View(currentUser);
         }
         #endregion
@@ -366,6 +370,7 @@ namespace MySpace.Controllers
         public ActionResult EditProfil(int id)
         {
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
             User user = DB.Users.Find(id);
             if (user != null)
             {
@@ -387,6 +392,7 @@ namespace MySpace.Controllers
                 return RedirectToAction("UserList");
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
             return View(uc);
         }
         #endregion

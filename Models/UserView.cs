@@ -47,10 +47,11 @@ namespace MySpace.Models
         [NotMapped]
         public string AvatarImageData { get; set; }
 
-        public bool IsAdmin
-        {
-            get { return UserTypeId == 1 /*Admin*/; }
-        }
+        //Prédicats Users
+        public bool IsAdmin => UserTypeId == 1; //Admin
+        public bool IsArtist => UserTypeId == 2; //Artiste
+        public bool IsFan => UserTypeId == 3; //Fan
+        //
         public string GetFullName(bool showGender = false)
         {
             if (showGender)

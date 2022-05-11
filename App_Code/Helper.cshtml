@@ -247,3 +247,14 @@
 {int roundedValue = (int)Math.Round(value);
     <div class="rating" ratingId="@id" value="@roundedValue.ToString()" locked="@readOnly.ToString()" scale=@scale.ToString()></div>
 }
+
+@helper YoutubeThumbnail(MySpace.Models.Video video)
+{
+    string youtubeId = video.YoutubeId;
+    string youtubeLink = "https://www.youtube.com/watch?v=" + youtubeId;
+    string youtubeThumbnail = "http://img.youtube.com/vi/" + youtubeId + "/0.jpg";
+    <a href="@youtubeLink" target="_blank">
+        <h5 style="width:260px" class="ellipsis">@video.Title</h5>
+        <img class="youtubeThumbnail" src="@youtubeThumbnail" alt="" />
+    </a>
+}

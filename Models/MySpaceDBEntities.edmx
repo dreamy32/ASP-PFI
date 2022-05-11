@@ -4,7 +4,29 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artists">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MainPhotoGUID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="Visits" Type="int" Nullable="false" />
+          <Property Name="Likes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FanLikes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="FriendShips">
           <Key>
             <PropertyRef Name="Id" />
@@ -31,6 +53,16 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LoginDate" Type="datetime" Nullable="false" />
           <Property Name="LogoutDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ResetPasswordCommands">
           <Key>
@@ -72,6 +104,52 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Videos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="YoutubeId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Artists__UserId__14270015">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Artists">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FanLikes__Artist__160F4887">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="FanLikes" Type="Self.FanLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FanLikes">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FanLikes__UserId__17036CC0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FanLikes" Type="Self.FanLikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FanLikes">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Logins__UserId__38996AB5">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
@@ -80,6 +158,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Logins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Artist__17F790F9">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__UserId__18EBB532">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -108,17 +210,53 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Videos__ArtistId__151B244E">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="Videos" Type="Self.Videos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Videos">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MySpaceDBModelStoreContainer">
+          <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FanLikes" EntityType="Self.FanLikes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FriendShips" EntityType="Self.FriendShips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ResetPasswordCommands" EntityType="Self.ResetPasswordCommands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnverifiedEmails" EntityType="Self.UnverifiedEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Artists__UserId__14270015" Association="Self.FK__Artists__UserId__14270015">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Artists" EntitySet="Artists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FanLikes__Artist__160F4887" Association="Self.FK__FanLikes__Artist__160F4887">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="FanLikes" EntitySet="FanLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FanLikes__UserId__17036CC0" Association="Self.FK__FanLikes__UserId__17036CC0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FanLikes" EntitySet="FanLikes" />
+          </AssociationSet>
           <AssociationSet Name="FK__Logins__UserId__38996AB5" Association="Self.FK__Logins__UserId__38996AB5">
             <End Role="Users" EntitySet="Users" />
             <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Artist__17F790F9" Association="Self.FK__Messages__Artist__17F790F9">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__UserId__18EBB532" Association="Self.FK__Messages__UserId__18EBB532">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK__Users__GenderId__34C8D9D1" Association="Self.FK__Users__GenderId__34C8D9D1">
             <End Role="Genders" EntitySet="Genders" />
@@ -128,9 +266,12 @@
             <End Role="UserTypes" EntitySet="UserTypes" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK__Videos__ArtistId__151B244E" Association="Self.FK__Videos__ArtistId__151B244E">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Videos" EntitySet="Videos" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MySpaceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -198,6 +339,9 @@
           <NavigationProperty Name="Gender" Relationship="Self.FK__Users__GenderId__34C8D9D1" FromRole="Users" ToRole="Genders" />
           <NavigationProperty Name="Logins" Relationship="Self.FK__Logins__UserId__38996AB5" FromRole="Users" ToRole="Logins" />
           <NavigationProperty Name="UserType" Relationship="Self.FK__Users__UserTypeI__35BCFE0A" FromRole="Users" ToRole="UserTypes" />
+          <NavigationProperty Name="Artists" Relationship="MySpaceDBModel.FK__Artists__UserId__14270015" FromRole="User" ToRole="Artist" />
+          <NavigationProperty Name="FanLikes" Relationship="MySpaceDBModel.FK__FanLikes__UserId__17036CC0" FromRole="User" ToRole="FanLike" />
+          <NavigationProperty Name="Messages" Relationship="MySpaceDBModel.FK__Messages__UserId__18EBB532" FromRole="User" ToRole="Message" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -263,7 +407,158 @@
             <End Role="UserTypes" EntitySet="UserTypes" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Artists" EntityType="MySpaceDBModel.Artist" />
+          <EntitySet Name="FanLikes" EntityType="MySpaceDBModel.FanLike" />
+          <EntitySet Name="Messages" EntityType="MySpaceDBModel.Message" />
+          <EntitySet Name="Videos" EntityType="MySpaceDBModel.Video" />
+          <AssociationSet Name="FK__Artists__UserId__14270015" Association="MySpaceDBModel.FK__Artists__UserId__14270015">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Artist" EntitySet="Artists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FanLikes__Artist__160F4887" Association="MySpaceDBModel.FK__FanLikes__Artist__160F4887">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="FanLike" EntitySet="FanLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Artist__17F790F9" Association="MySpaceDBModel.FK__Messages__Artist__17F790F9">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Videos__ArtistId__151B244E" Association="MySpaceDBModel.FK__Videos__ArtistId__151B244E">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Video" EntitySet="Videos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FanLikes__UserId__17036CC0" Association="MySpaceDBModel.FK__FanLikes__UserId__17036CC0">
+            <End Role="User" EntitySet="Users" />
+            <End Role="FanLike" EntitySet="FanLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__UserId__18EBB532" Association="MySpaceDBModel.FK__Messages__UserId__18EBB532">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MainPhotoGUID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="Visits" Type="Int32" Nullable="false" />
+          <Property Name="Likes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MySpaceDBModel.FK__Artists__UserId__14270015" FromRole="Artist" ToRole="User" />
+          <NavigationProperty Name="FanLikes" Relationship="MySpaceDBModel.FK__FanLikes__Artist__160F4887" FromRole="Artist" ToRole="FanLike" />
+          <NavigationProperty Name="Messages" Relationship="MySpaceDBModel.FK__Messages__Artist__17F790F9" FromRole="Artist" ToRole="Message" />
+          <NavigationProperty Name="Videos" Relationship="MySpaceDBModel.FK__Videos__ArtistId__151B244E" FromRole="Artist" ToRole="Video" />
+        </EntityType>
+        <EntityType Name="FanLike">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ArtistId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Creation" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Artist" Relationship="MySpaceDBModel.FK__FanLikes__Artist__160F4887" FromRole="FanLike" ToRole="Artist" />
+          <NavigationProperty Name="User" Relationship="MySpaceDBModel.FK__FanLikes__UserId__17036CC0" FromRole="FanLike" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ArtistId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Creation" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Artist" Relationship="MySpaceDBModel.FK__Messages__Artist__17F790F9" FromRole="Message" ToRole="Artist" />
+          <NavigationProperty Name="User" Relationship="MySpaceDBModel.FK__Messages__UserId__18EBB532" FromRole="Message" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ArtistId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="YoutubeId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Creation" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Artist" Relationship="MySpaceDBModel.FK__Videos__ArtistId__151B244E" FromRole="Video" ToRole="Artist" />
+        </EntityType>
+        <Association Name="FK__Artists__UserId__14270015">
+          <End Type="MySpaceDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="MySpaceDBModel.Artist" Role="Artist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Artist">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FanLikes__Artist__160F4887">
+          <End Type="MySpaceDBModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="MySpaceDBModel.FanLike" Role="FanLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FanLike">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Artist__17F790F9">
+          <End Type="MySpaceDBModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="MySpaceDBModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Videos__ArtistId__151B244E">
+          <End Type="MySpaceDBModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="MySpaceDBModel.Video" Role="Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Video">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FanLikes__UserId__17036CC0">
+          <End Type="MySpaceDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="MySpaceDBModel.FanLike" Role="FanLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FanLike">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__UserId__18EBB532">
+          <End Type="MySpaceDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="MySpaceDBModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -341,6 +636,52 @@
               <MappingFragment StoreEntitySet="UserTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="MySpaceDBModel.Artist">
+              <MappingFragment StoreEntitySet="Artists">
+                <ScalarProperty Name="Likes" ColumnName="Likes" />
+                <ScalarProperty Name="Visits" ColumnName="Visits" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MainPhotoGUID" ColumnName="MainPhotoGUID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FanLikes">
+            <EntityTypeMapping TypeName="MySpaceDBModel.FanLike">
+              <MappingFragment StoreEntitySet="FanLikes">
+                <ScalarProperty Name="Creation" ColumnName="Creation" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="MySpaceDBModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Creation" ColumnName="Creation" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Videos">
+            <EntityTypeMapping TypeName="MySpaceDBModel.Video">
+              <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="Creation" ColumnName="Creation" />
+                <ScalarProperty Name="YoutubeId" ColumnName="YoutubeId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -39,6 +39,6 @@
     }
 
     confirmedCommand(message, url) {
-        bootbox.confirm(message, (result) => { this.command(url) });
+        bootbox.confirm(message, (result) => { if (result) this.command(url) });
     }
 }

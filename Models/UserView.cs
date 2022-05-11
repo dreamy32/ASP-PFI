@@ -18,6 +18,9 @@ namespace MySpace.Models
             Verified = false;
             Blocked = false;
             Logins = new HashSet<Login>();
+            Artists = new HashSet<Artist>();
+            FanLikes = new HashSet<FanLike>();
+            Messages = new HashSet<Message>();
         }
 
         [NotMapped]

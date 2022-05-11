@@ -4,17 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="283cb6e1ac5b473c97ef922b12f9295a" Name="Diagram1">
-        <EntityTypeShape EntityType="MySpaceDBModel.FriendShip" Width="1.5" PointX="0.625" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MySpaceDBModel.Gender" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MySpaceDBModel.Login" Width="1.5" PointX="4.625" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MySpaceDBModel.ResetPasswordCommand" Width="1.5" PointX="2.625" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MySpaceDBModel.UnverifiedEmail" Width="1.5" PointX="4.625" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MySpaceDBModel.User" Width="1.5" PointX="2.625" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MySpaceDBModel.UserType" Width="1.5" PointX="0.625" PointY="2.375" IsExpanded="true" />
-        <AssociationConnector Association="MySpaceDBModel.FK__Users__GenderId__34C8D9D1" ManuallyRouted="false" />
+      <Diagram DiagramId="283cb6e1ac5b473c97ef922b12f9295a" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="MySpaceDBModel.FriendShip" Width="1.5" PointX="1.375" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Gender" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Login" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.ResetPasswordCommand" Width="1.5" PointX="12.875" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.UnverifiedEmail" Width="1.5" PointX="13" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.User" Width="1.5" PointX="5.125" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.UserType" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Users__GenderId__34C8D9D1" ManuallyRouted="false" ></AssociationConnector>
         <AssociationConnector Association="MySpaceDBModel.FK__Logins__UserId__38996AB5" ManuallyRouted="false" />
         <AssociationConnector Association="MySpaceDBModel.FK__Users__UserTypeI__35BCFE0A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Artist" Width="1.5" PointX="7.375" PointY="3.875" />
+        <EntityTypeShape EntityType="MySpaceDBModel.FanLike" Width="1.5" PointX="7.375" PointY="1.375" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Message" Width="1.5" PointX="5.125" PointY="5.875" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Video" Width="1.5" PointX="9.75" PointY="4.5" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Artists__UserId__14270015" />
+        <AssociationConnector Association="MySpaceDBModel.FK__FanLikes__Artist__160F4887" ></AssociationConnector>
+        <AssociationConnector Association="MySpaceDBModel.FK__Messages__Artist__17F790F9" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Videos__ArtistId__151B244E" />
+        <AssociationConnector Association="MySpaceDBModel.FK__FanLikes__UserId__17036CC0" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Messages__UserId__18EBB532" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

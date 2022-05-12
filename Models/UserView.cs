@@ -14,13 +14,17 @@ namespace MySpace.Models
         public User()
         {
             CreationDate = DateTime.Now;
-            UserTypeId = 3; // User rights level
+            //UserTypeId = 3; // User rights level
             Verified = false;
             Blocked = false;
             Logins = new HashSet<Login>();
             Artists = new HashSet<Artist>();
             FanLikes = new HashSet<FanLike>();
             Messages = new HashSet<Message>();
+            this.Logins = new HashSet<Login>();
+            this.Artists = new HashSet<Artist>();
+            this.FanLikes = new HashSet<FanLike>();
+            this.Messages = new HashSet<Message>();
         }
 
         [NotMapped]

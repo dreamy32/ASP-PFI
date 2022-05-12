@@ -302,10 +302,9 @@
     <Content Include="Views\Application\Index.cshtml" />
     <Content Include="Views\FriendShips\GetFriendShipsStatus.cshtml" />
     <Content Include="Views\FriendShips\Index.cshtml" />
+    <Content Include="Views\Artists\Page.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Artists\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

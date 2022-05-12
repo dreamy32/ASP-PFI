@@ -43,7 +43,7 @@ namespace MySpace.Models
             else
                 throw new Exception("Aucune transaction en cours! Impossible de mettre à jour la base de données!");
         }
- 
+
         public static bool EmailAvailable(this MySpaceDBEntities DB, string email, int excludedId = 0)
         {
             User user = DB.Users.Where(u => u.Email.ToLower() == email.ToLower()).FirstOrDefault();
@@ -86,9 +86,26 @@ namespace MySpace.Models
             user = DB.Users.Add(user);
             DB.SaveChanges();
             DB.Entry(user).Reference(u => u.Gender).Load();
-            DB.Entry(user).Reference(u => u.UserType).Load(); OnlineUsers.RenewSerialNumber();
+            //DB.Entry(user).Reference(u => u.UserType).Load();
+            OnlineUsers.RenewSerialNumber();
             return user;
         }
+
+        public static Artist Add_Artist(this MySpaceDBEntities DB, Artist artiste, User user)
+        {
+            artiste.Name = user.FirstName;
+            artiste.MainPhotoGUID = user.GetAvatarURL();
+            artiste.Description = "Entrez une description";
+            artiste.Approved = false;
+            artiste.Likes = 0;
+            artiste.Visits = 0;
+            artiste = DB.Artists.Add(artiste);
+            DB.SaveChanges();
+            DB.Entry(artiste).Reference(u => u.User).Load();
+            OnlineUsers.RenewSerialNumber();
+            return artiste;
+        }
+
         public static User Update_User(this MySpaceDBEntities DB, User user)
         {
             user.SaveAvatar();
@@ -106,7 +123,7 @@ namespace MySpace.Models
             {
                 BeginTransaction(DB);
                 OnlineUsers.RemoveUser(userToDelete.Id);
-               
+
                 DB.DeleteFriendShips(userId);
                 DB.Logins.RemoveRange(DB.Logins.Where(l => l.UserId == userId));
 

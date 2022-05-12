@@ -36,7 +36,7 @@
     </fieldset>
 
     <fieldset class="formField">
-        <legend>Type d'usager</legend>
+        <legend>@Html.DisplayNameFor(model => model.UserTypeId)</legend>
         @Helper.ListToRadioButtonGroup("UserTypeId", (SelectList)ViewBag.UserTypes, Model.UserTypeId)
         @Html.ValidationMessageFor(model => model.UserTypeId, "", new { @class = "text-danger" })
     </fieldset>

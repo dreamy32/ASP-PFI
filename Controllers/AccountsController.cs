@@ -44,11 +44,17 @@ namespace MySpace.Controllers
             if (ModelState.IsValid)
             {
                 user = DB.Add_User(user);
+
+                if (user.IsArtist)
+                {
+                    Artist artiste = new Artist();
+                    DB.Add_Artist(artiste, user);
+                }
                 SendEmailVerification(user, user.Email);
                 return RedirectToAction("SubscribeDone/" + user.Id.ToString());
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
-                        ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
+            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.Where(u => u.Id > 1).ToList());
             return View(user);
         }
         public ActionResult SubscribeDone(int id)

@@ -3,17 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MySpace.Models;
 
 namespace MySpace.Controllers
 {
     public class ArtistsController : Controller
     {
-        // GET: Artists
+        MySpaceDBEntities DB = new MySpaceDBEntities();
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult Page(int id)
+        {
+            Artist artist = DB.Artists.Find(id);
+            if (artist != null)
+                return View(artist);
+
+            RedirectToAction("Index");
+        }
+
+        public ActionResult GetPage(int artistId)
         {
             return View();
         }
@@ -33,10 +43,7 @@ namespace MySpace.Controllers
         {
             return View();
         }
-        public ActionResult GetPage(int artistId)
-        {
-            return View();
-        }
+        
         public ActionResult AddVideo(int artistId, string title, string link)
         {
             return View();

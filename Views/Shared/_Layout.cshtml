@@ -28,8 +28,7 @@
                 {
                     if (currentUser.IsArtist)
                     {
-                        // changer pour id artiste bobux
-                        @Helper.GlyphiconControllerAction("Artists", "Page/" + currentUser.Id, "menu-Icon glyphicon-eye-open", "Voir votre page d'artiste...")
+                        @Helper.GlyphiconControllerAction("Artists", "Page/" + Session["artisteId"], "menu-Icon glyphicon-eye-open", "Voir votre page d'artiste...")
                     }
                     if (currentUser.IsAdmin)
                     {

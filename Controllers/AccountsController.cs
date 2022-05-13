@@ -49,6 +49,7 @@ namespace MySpace.Controllers
                 {
                     Artist artiste = new Artist();
                     DB.Add_Artist(artiste, user);
+                    Session["artisteId"] = artiste.Id;
                 }
                 SendEmailVerification(user, user.Email);
                 return RedirectToAction("SubscribeDone/" + user.Id.ToString());

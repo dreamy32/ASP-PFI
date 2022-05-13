@@ -100,6 +100,7 @@ namespace MySpace.Models
             artiste.Likes = 0;
             artiste.Visits = 0;
             artiste.UserId = user.Id;
+            artiste.Id = DB.Artists.Count() + 1;
             artiste = DB.Artists.Add(artiste);
             DB.SaveChanges();
             DB.Entry(artiste).Reference(u => u.User).Load();

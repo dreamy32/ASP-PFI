@@ -313,6 +313,10 @@ namespace MySpace.Controllers
                 DateTime serverDate = DateTime.Now;
                 DateTime universalDate = serverDate.ToUniversalTime();
                 int serverTimeZoneOffset = serverDate.Hour - universalDate.Hour;
+                if (user.IsArtist)
+                {
+                    Session["artisteId"] = DB.Artists.Where(a => a.UserId == user.Id).FirstOrDefault().Id;
+                }
                 Session["TimeZoneOffset"] = loginCredential.TimeZoneOffset + serverTimeZoneOffset;
                 Session["currentLoginId"] = DB.AddLogin(user.Id).Id;
                 return RedirectToAction("Index", "Application");

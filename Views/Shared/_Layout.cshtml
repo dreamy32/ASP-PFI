@@ -11,7 +11,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div >
+    <div>
         <div style="background-color:blue; height:55px; margin-top:-50px; padding-top:15px;padding-left:10px;">
             @if (currentUser != null)
             {
@@ -27,7 +27,8 @@
                 else
                 {
                     if (currentUser.IsArtist)
-                    {                                                           // changer pour id artiste bobux
+                    {
+                        // changer pour id artiste bobux
                         @Helper.GlyphiconControllerAction("Artists", "Page/" + currentUser.Id, "menu-Icon glyphicon-eye-open", "Voir votre page d'artiste...")
                     }
                     if (currentUser.IsAdmin)
@@ -45,7 +46,7 @@
             </div>
         </div>
     </div>
-   
+
     <br />
     <div class="container body-content">
         @RenderBody()

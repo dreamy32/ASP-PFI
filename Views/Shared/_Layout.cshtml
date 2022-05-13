@@ -20,11 +20,6 @@
             <div style="padding-left:10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); grid-auto-rows: minmax(35px, auto); ">
                 @Helper.GlyphiconControllerAction("Application", "Index", "menu-Icon glyphicon-asterisk", "Retour à la liste des photos")
 
-                @if (currentUser.IsArtist)
-                {                                                           // changer pour id artiste bobux
-                    @Helper.GlyphiconControllerAction("Artists", "Page/" + currentUser.Id, "menu-Icon glyphicon-eye-open", "Voir votre page d'artiste...")
-                }
-
                 @if (currentUser == null)
                 {
                     @Helper.GlyphiconControllerAction("Accounts", "Login", "menu-Icon glyphicon-log-in", "Se connecter...")

@@ -86,7 +86,7 @@ namespace MySpace.Models
             user = DB.Users.Add(user);
             DB.SaveChanges();
             DB.Entry(user).Reference(u => u.Gender).Load();
-            //DB.Entry(user).Reference(u => u.UserType).Load();
+            DB.Entry(user).Reference(u => u.UserType).Load();
             OnlineUsers.RenewSerialNumber();
             return user;
         }

@@ -20,7 +20,7 @@ namespace MySpace.Controllers
             if (artist != null)
                 return View(artist);
 
-            RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         public ActionResult GetPage(int artistId)

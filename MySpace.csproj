@@ -303,6 +303,8 @@
     <Content Include="Views\FriendShips\GetFriendShipsStatus.cshtml" />
     <Content Include="Views\FriendShips\Index.cshtml" />
     <Content Include="Views\Artists\Page.cshtml" />
+    <Content Include="Views\Artists\Index.cshtml" />
+    <Content Include="Views\Artists\GetArtistsList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

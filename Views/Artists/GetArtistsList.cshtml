@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MySpace.Models.Artist>
+
+
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+            @Helper.DisplayArtist(item)
+       
+    </tr>
+}
+
+</table>

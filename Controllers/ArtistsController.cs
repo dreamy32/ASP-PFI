@@ -31,9 +31,14 @@ namespace MySpace.Controllers
         {
             return View();
         }
-        public ActionResult GetArtistsList()
+        public ActionResult GetArtistsList(bool forceRefresh = false)
         {
-            return View();
+            User currentUser = OnlineUsers.GetSessionUser();
+            if ((currentUser != null) && (forceRefresh || OnlineUsers.NeedUpdate()))
+            {
+                return PartialView(DB.Artists);
+            }
+            return null;
         }
         public ActionResult SetSearchArtistName(string name)
         {

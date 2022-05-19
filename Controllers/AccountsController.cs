@@ -315,7 +315,7 @@ namespace MySpace.Controllers
                 int serverTimeZoneOffset = serverDate.Hour - universalDate.Hour;
                 if (user.IsArtist)
                 {
-                    Session["artisteId"] = DB.Artists.Where(a => a.UserId == user.Id).FirstOrDefault().Id;
+                    Session["artisteId"] = DB.Artists.Where(a => a.UserId == user.Id).ToArray()[0].Id;
                 }
                 Session["TimeZoneOffset"] = loginCredential.TimeZoneOffset + serverTimeZoneOffset;
                 Session["currentLoginId"] = DB.AddLogin(user.Id).Id;

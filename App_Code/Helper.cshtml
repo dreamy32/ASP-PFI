@@ -152,6 +152,27 @@
     </a>
 }
 
+@helper DisplayArtist(MySpace.Models.Artist artist)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+var avatarUrl = Url.Content(artist.User.GetAvatarURL());
+var linkUrl = Url.Action("Page/" + artist.Id, "Artists");
+<td>
+    <a href="@linkUrl" data-toogle="tooltip" title='voir la page de @artist.Name'>
+        <div class="smallAvatar"
+             style="background: url(@avatarUrl) no-repeat center center; background-size: cover;"></div>
+        <h3>@artist.User.FirstName @artist.User.LastName </h3>
+    </a>
+</td>
+<td>
+    @GlyphiconNoAction("blue glyphicon-eye-open", "nombre de visites")
+    @artist.Visits
+</td>
+<td>
+    @GlyphiconNoAction("blue glyphicon-thumbs-up", "nombre de likes")
+    @artist.Likes
+</td>
+}
+
 @helper AvatarUser(MySpace.Models.User user)
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var avatarUrl = Url.Content(user.GetAvatarURL());

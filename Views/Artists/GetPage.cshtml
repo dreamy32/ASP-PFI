@@ -1,0 +1,30 @@
+﻿@model MySpace.Models.Artist
+
+<div>
+    @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
+    { @Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page"); }
+    <h2>@Model.Name</h2>
+
+    @Model.Visits Visites
+    @Model.Likes Likes
+
+    <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
+    <p>@Model.Description</p>
+    
+    <table>
+        @* chaque  3 video change tr *@
+        Videos youtube
+        @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
+        {@Helper.GlyphiconAction("AddVideo/", "glyphicon-green glyphicon-plus", "modifier votre page");
+         }
+        @foreach (var video in Model.Videos)
+        {
+            <tr>
+                <td>@* video thumbnail *@</td>
+            </tr>
+        }
+    </table>
+
+    Messages
+</div>
+

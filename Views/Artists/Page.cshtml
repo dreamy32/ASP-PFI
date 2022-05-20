@@ -4,12 +4,16 @@
     ViewBag.Title = "Page";
 }
 
-<h2>Page</h2>
-hey
+<div id="ArtistPageContainer">
+
+</div>
 
 @section Scripts {
-    <script defer>
-        let partialRefresh = new PartialRefresh("@Url.Action("GetPage", new { artistId = (int)Model.Id })", "ArstistPageContainer", 5, PostRefreshTasks);;
+    @Scripts.Render("~/bundles/partialRefresh")
+    @Scripts.Render("~/bundles/jqueryval")
+<script defer>
+        let partialRefresh = new PartialRefresh("@Url.Action("GetPage", new { artistId = (int)Model.Id})", "ArtistPageContainer", 5);
+        @*let partialRefresh = new PartialRefresh("@Url.Action("GetPage", new { artistId = (int)Model.Id })", "ArtistPageContainer", 5, PostRefreshTasks);;
         $("#AddVideoForm").hide();
         function postRefreshCallback() {
             $("#AddVideo").click(function () {
@@ -77,8 +81,8 @@ hey
                 }
                 return false;
             }
-        }
-    </script>
+        }*@
+</script>
 
 }
 

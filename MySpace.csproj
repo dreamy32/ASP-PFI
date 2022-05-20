@@ -207,6 +207,7 @@
     <Content Include="Content\UI-icons\Accept.png" />
     <Content Include="Content\UI-icons\admin.png" />
     <Content Include="Content\UI-icons\Blocked.png" />
+    <Content Include="Content\UI-icons\defaultUser.png" />
     <Content Include="Content\UI-icons\female.png" />
     <Content Include="Content\UI-icons\male.png" />
     <Content Include="Content\UI-icons\Masked.png" />
@@ -305,6 +306,7 @@
     <Content Include="Views\Artists\Page.cshtml" />
     <Content Include="Views\Artists\Index.cshtml" />
     <Content Include="Views\Artists\GetArtistsList.cshtml" />
+    <Content Include="Views\Artists\GetPage.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -25,7 +25,7 @@ namespace MySpace.Controllers
 
         public ActionResult GetPage(int artistId)
         {
-            return View();
+            return PartialView(DB.Artists.Find(artistId));
         }
         public ActionResult GroupEmail()
         {

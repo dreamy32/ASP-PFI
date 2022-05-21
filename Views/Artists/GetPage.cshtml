@@ -1,30 +1,64 @@
 ﻿@model MySpace.Models.Artist
 
-<div>
-    @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-    { @Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page"); }
-    <h2>@Model.Name</h2>
-
-    @Model.Visits Visites
-    @Model.Likes Likes
-
-    <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
-    <p>@Model.Description</p>
-    
-    <table>
-        @* chaque  3 video change tr *@
-        Videos youtube
+<br />
+<div style="display:grid; grid-template-columns: 40px auto">
+    <div>
         @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-        {@Helper.GlyphiconAction("AddVideo/", "glyphicon-green glyphicon-plus", "modifier votre page");
-         }
-        @foreach (var video in Model.Videos)
-        {
-            <tr>
-                <td>@* video thumbnail *@</td>
-            </tr>
-        }
-    </table>
+        {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
+    }
+        <h2>@Model.Name</h2>
 
-    Messages
+        @Model.Visits Visites
+        @Model.Likes Likes
+
+        <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
+        <p>@Model.Description</p>
+
+        <fieldset style="width : 500px; height: 200px">
+            <legend>Vidéos youtube</legend>
+            @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
+            {<span id="AddVideo" style="margin-left: 10px;">@Helper.GlyphiconNoAction("glyphicon-green glyphicon-plus", "ajouter un video")</span>}
+            <fieldset id="AddVideoForm" style="width: 280px;">
+                <legend>Ajout d'un vidéo YouTube</legend>
+                <input id="title" class="form-control" placeholder="Titre" style="margin-bottom:10px">
+                <input id="youtubeLink" class="form-control" placeholder="Lien Youtube" style="margin-bottom:10px">
+                <div style="display: grid; grid-template-columns:25px 25px; ">
+                    <div id="AcceptVideoLink" artistid="9" class="glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer" title="Ajouter"></div>
+                    <div id="CancelAddVideo" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer" title="Annuler"></div>
+                </div>
+            </fieldset>
+            <table>
+                @* chaque  3 video change tr *@
+
+                @foreach (var video in Model.Videos)
+                {
+                    <tr>
+                        <td>@* video thumbnail *@</td>
+                    </tr>
+                }
+            </table>
+        </fieldset>
+    </div>
+    <br /><br />
+
+    <fieldset style="width : 500px; height: 200px">
+        <legend>Messages</legend>
+
+
+
+    </fieldset>
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script defer>
+        $("#AddVideoForm").hide();
+
+        $("#AddVideo").click(function () {
+            $("#AddVideoForm").show();
+            $("#AddVideo").hide();
+            $(".DeleteVideo").hide();
+            partialRefresh.pause();
+        });
+    </script>
+    }
 

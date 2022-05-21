@@ -12,76 +12,78 @@
     @Scripts.Render("~/bundles/partialRefresh")
     @Scripts.Render("~/bundles/jqueryval")
 <script defer>
-        let partialRefresh = new PartialRefresh("@Url.Action("GetPage", new { artistId = (int)Model.Id})", "ArtistPageContainer", 5);
-        @*let partialRefresh = new PartialRefresh("@Url.Action("GetPage", new { artistId = (int)Model.Id })", "ArtistPageContainer", 5, PostRefreshTasks);;
-        $("#AddVideoForm").hide();
-        function postRefreshCallback() {
-            $("#AddVideo").click(function () {
-                $("#AddVideoForm").show();
-                $("#AddVideo").hide();
-                $(".DeleteVideo").hide();
-                partialRefresh.pause();
-            });
-            $("#AddMessage").click(function () {
-                $("#currentUserMessageForm").show();
-                $("#AddMessage").hide();
-                partialRefresh.pause();
-            });
-            $("#AcceptVideoLink").click(function () {
-                let title = $("#title").val();
-                let link = $("#youtubeLink").val();
-                if (title == "") {
-                    bootbox.alert("Veuillez entrer un titre");
-                } else {
-                    if (!validateYouTubeUrl(link)) {
-                        bootbox.alert("Veuillez entrer un lien youtube valide");
-                    } else {
-                        let artistId = $(this).attr("artistId");
-                        let url = /Artists/ + "AddVideo?artistId=" + artistId + "&title=" + title + "&link=" + link;
-                        partialRefresh.command(url);
-                        partialRefresh.restart();
-                        $("#AddVideoForm").hide();
-                        $("#AddVideo").show();
-                        $(".DeleteVideo").show();
-                    }
-                }
-            })
-            $("#CancelAddVideo").click(function () {
-                partialRefresh.restart();
-                $("#AddVideoForm").hide();
-                $("#AddVideo").show();
-                $(".DeleteVideo").show();
-            })
-            $("#AcceptNewMessage").click(function () {
-                let message = $("#newMessage").val();
-                if (message == "") {
-                    bootbox.alert("Veuillez entrer un message");
+
+    let actionUrl = /Artists/ + "GetPage?artistId=" + @Model.Id;
+    let partialRefresh = new PartialRefresh(actionUrl, "ArtistPageContainer", 5, postRefreshCallback);
+    $("#AddVideoForm").hide();
+    function postRefreshCallback() {
+        $("#AddVideo").click(function () {
+            $("#AddVideoForm").show();
+            $("#AddVideo").hide();
+            $(".DeleteVideo").hide();
+            partialRefresh.pause();
+        });
+        $("#AddMessage").click(function () {
+            $("#currentUserMessageForm").show();
+            $("#AddMessage").hide();
+            partialRefresh.pause();
+        });
+        $("#AcceptVideoLink").click(function () {
+            let title = $("#title").val();
+            let link = $("#youtubeLink").val();
+            if (title == "") {
+                bootbox.alert("Veuillez entrer un titre");
+            } else {
+                if (!validateYouTubeUrl(link)) {
+                    bootbox.alert("Veuillez entrer un lien youtube valide");
                 } else {
                     let artistId = $(this).attr("artistId");
-                    let url = /Artists/ + "AddMessage?artistId=" + artistId + "&message=" + message;
+                    let url = /Artists/ + "AddVideo?artistId=" + artistId + "&title=" + title + "&link=" + link;
                     partialRefresh.command(url);
-                    $("#currentUserMessageForm").hide();
-                    $("#AddMessage").show();
                     partialRefresh.restart();
+                    $("#AddVideoForm").hide();
+                    $("#AddVideo").show();
+                    $(".DeleteVideo").show();
                 }
-            });
-            $("#CancelAddMessage").click(function () {
+            }
+        })
+        $("#CancelAddVideo").click(function () {
+            partialRefresh.restart();
+            $("#AddVideoForm").hide();
+            $("#AddVideo").show();
+            $(".DeleteVideo").show();
+        })
+        $("#AcceptNewMessage").click(function () {
+            let message = $("#newMessage").val();
+            if (message == "") {
+                bootbox.alert("Veuillez entrer un message");
+            } else {
+                let artistId = $(this).attr("artistId");
+                let url = /Artists/ + "AddMessage?artistId=" + artistId + "&message=" + message;
+                partialRefresh.command(url);
                 $("#currentUserMessageForm").hide();
                 $("#AddMessage").show();
                 partialRefresh.restart();
-            });
-        }
-
-        function validateYouTubeUrl(url) {
-            if (url != undefined || url != '') {
-                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
-                var match = url.match(regExp);
-                if (match && match[2].length == 11) {
-                    return true;
-                }
-                return false;
             }
-        }*@
+        });
+        $("#CancelAddMessage").click(function () {
+            $("#currentUserMessageForm").hide();
+            $("#AddMessage").show();
+            partialRefresh.restart();
+        });
+    }
+
+    function validateYouTubeUrl(url) {
+        if (url != undefined || url != '') {
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            if (match && match[2].length == 11) {
+                return true;
+            }
+            return false;
+        }
+    }
+
 </script>
 
 }

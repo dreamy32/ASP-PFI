@@ -189,6 +189,7 @@
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserView.cs" />
+    <Compile Include="Models\EmailView.cs" />
     <Compile Include="Models\Video.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>

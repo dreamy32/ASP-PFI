@@ -21,10 +21,6 @@ namespace MySpace.Models
             Artists = new HashSet<Artist>();
             FanLikes = new HashSet<FanLike>();
             Messages = new HashSet<Message>();
-            this.Logins = new HashSet<Login>();
-            this.Artists = new HashSet<Artist>();
-            this.FanLikes = new HashSet<FanLike>();
-            this.Messages = new HashSet<Message>();
         }
 
         [NotMapped]

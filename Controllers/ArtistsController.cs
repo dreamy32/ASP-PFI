@@ -9,7 +9,27 @@ namespace MySpace.Controllers
 {
     public class ArtistsController : Controller
     {
+        private const string serialNumber = "ArtistsSerialNumber";
         MySpaceDBEntities DB = new MySpaceDBEntities();
+        #region PageSerialNumbers
+        public bool IsPageUpToDate => ((string)Session[serialNumber] == (string)HttpRuntime.Cache[serialNumber]);
+        public void RenewArtistsSerialNumber()
+        {
+            HttpRuntime.Cache[serialNumber] = Guid.NewGuid().ToString();
+        }
+        public string GetArtistsSerialNumber()
+        {
+            if (HttpRuntime.Cache[serialNumber] == null)
+            {
+                RenewArtistsSerialNumber();
+            }
+            return (string)HttpRuntime.Cache[serialNumber];
+        }
+        public void SetLocalArtistsSerialNumber()
+        {
+            Session[serialNumber] = GetArtistsSerialNumber();
+        }
+        #endregion
         public ActionResult Index()
         {
             return View();
@@ -70,7 +90,7 @@ namespace MySpace.Controllers
                     YoutubeId = youtubeId
                 };
                 DB.Add_Video(video);
-                //RenewArtistsSerialNumber();
+                RenewArtistsSerialNumber();
             }
             return null;
         }

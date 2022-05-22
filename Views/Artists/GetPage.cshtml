@@ -22,15 +22,22 @@
 
 
     </div>*@
-<div class="ArtistInfoLayout">
-    <div>
-        @Helper.ImageBig(Model.MainPhotoGUID)
+<div>
+    <div style="display:grid; grid-template-columns: 120px 120px 120px">
+        <h4>@Model.Visits Visites</h4>
+        <h4>@Model.Likes Likes</h4>
     </div>
+    <div class="ArtistInfoLayout">
+        <div>
+            @Helper.ImageBig(Model.MainPhotoGUID)
+        </div>
 
-    <div class="ArtistDescription">
-        @Model.Description
+        <div class="ArtistDescription">
+            @Model.Description
+        </div>
     </div>
 </div>
+
 <br />
 <fieldset>
     <legend>

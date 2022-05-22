@@ -197,6 +197,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\MySpaceDB.mdf" />
+    <Content Include="App_Data\MySpaceDB_log.ldf">
+      <DependentUpon>MySpaceDB.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -306,11 +310,8 @@
     <Content Include="Views\Artists\Index.cshtml" />
     <Content Include="Views\Artists\GetArtistsList.cshtml" />
     <Content Include="Views\Artists\GetPage.cshtml" />
-    <Content Include="Views\Artists\ModifyPage.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

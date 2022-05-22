@@ -117,7 +117,7 @@ namespace MySpace.Controllers
         }
         public ActionResult ModifyPage(int id)
         {
-            return View(DB.Artists.Find(id));
+            return null;
         }
     }
 }

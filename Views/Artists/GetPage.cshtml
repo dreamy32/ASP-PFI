@@ -1,64 +1,93 @@
 ﻿@model MySpace.Models.Artist
-
+@{
+    MySpace.Models.User currentUser = MySpace.Models.OnlineUsers.GetSessionUser();
+    MySpace.Models.Message currentMessage = Model.Messages.Where(pr => (pr.Id == Model.Id && pr.UserId ==
+   currentUser.Id)).FirstOrDefault();
+    int artistId = Model.Id;
+    DateTime currentMessageCreationDate = DateTime.Now;
+}
 <br />
-<div style="display:grid; grid-template-columns: 40px auto">
-    <div>
-        @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-        {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
-    }
-        <h2>@Model.Name</h2>
+<div>
+    @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
+    {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
+}
+    <h2>@Model.Name + @artistId</h2>
 
-        @Model.Visits Visites
-        @Model.Likes Likes
+    @Model.Visits Visites
+    @Model.Likes Likes
 
-        <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
-        <p>@Model.Description</p>
-
-        <fieldset style="width : 500px; height: 200px">
-            <legend>Vidéos youtube</legend>
-            @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-            {<span id="AddVideo" style="margin-left: 10px;">@Helper.GlyphiconNoAction("glyphicon-green glyphicon-plus", "ajouter un video")</span>}
-            <fieldset id="AddVideoForm" style="width: 280px;">
-                <legend>Ajout d'un vidéo YouTube</legend>
-                <input id="title" class="form-control" placeholder="Titre" style="margin-bottom:10px">
-                <input id="youtubeLink" class="form-control" placeholder="Lien Youtube" style="margin-bottom:10px">
-                <div style="display: grid; grid-template-columns:25px 25px; ">
-                    <div id="AcceptVideoLink" artistid="9" class="glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer" title="Ajouter"></div>
-                    <div id="CancelAddVideo" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer" title="Annuler"></div>
-                </div>
-            </fieldset>
-            <table>
-                @* chaque  3 video change tr *@
-
-                @foreach (var video in Model.Videos)
-                {
-                    <tr>
-                        <td>@* video thumbnail *@</td>
-                    </tr>
-                }
-            </table>
-        </fieldset>
-    </div>
-    <br /><br />
+    <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
+    <p>@Model.Description</p>
 
     <fieldset style="width : 500px; height: 200px">
-        <legend>Messages</legend>
+        <legend>Vidéos youtube</legend>
+        @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
+        {<span id="AddVideo" style="margin-left: 10px;">@Helper.GlyphiconNoAction("glyphicon-green glyphicon-plus", "ajouter un video")</span>}
+        <fieldset id="AddVideoForm" style="width: 280px;">
+            <legend>Ajout d'un vidéo YouTube</legend>
+            <input id="title" class="form-control" placeholder="Titre" style="margin-bottom:10px">
+            <input id="youtubeLink" class="form-control" placeholder="Lien Youtube" style="margin-bottom:10px">
+            <div style="display: grid; grid-template-columns:25px 25px; ">
+                <div id="AcceptVideoLink" artistid="9" class="glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer" title="Ajouter"></div>
+                <div id="CancelAddVideo" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer" title="Annuler"></div>
+            </div>
+        </fieldset>
+        <table>
+            @* chaque  3 video change tr *@
 
-
-
+            @foreach (var video in Model.Videos)
+            {
+                <tr>
+                    <td>@* video thumbnail *@</td>
+                </tr>
+            }
+        </table>
     </fieldset>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script defer>
-        $("#AddVideoForm").hide();
+<br />
+<br />
 
-        $("#AddVideo").click(function () {
-            $("#AddVideoForm").show();
-            $("#AddVideo").hide();
-            $(".DeleteVideo").hide();
-            partialRefresh.pause();
-        });
-    </script>
-    }
+<fieldset style="min-width: 320px;">
+    <legend>Messages @Helper.GlyphiconNoAction("glyphicon glyphiconStyle glyphicon-plus pointer", "Ajouter un message", id: "AddMessage")</legend>
+    <div id="PhotoRatingsContainer" class="PhotoRatingsContainer">
+        <div id="currentUserMessageForm" style="margin-bottom:20px; display:none">
+            <hr />
+            <div style="height: 40px; display:grid; grid-template-columns: 180px auto">
+                <div>
+                    @Helper.AvatarUser(currentUser)
+                </div>
+            </div>
+            <textarea id="newMessage" style="width:100%"></textarea>
+            <div style="height: 25px; display:grid; grid-template-columns: 26px 26px">
+                @Helper.GlyphiconNoAction("glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer",
+                "Ajouter", id: "AcceptNewMessage", otherAttributes: $"artistId = {artistId}")
+                @Helper.GlyphiconNoAction("glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer",
+                "Annuler", id: "CancelAddMessage")
+            </div>
+        </div>
+        @{
+            IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderBy(m => m.Creation); ;
+            foreach (MySpace.Models.Message message in messages)
+            {
+                if (!message.User.Blocked)
+                {
+                    <hr />
+
+                    <div style="height: 40px; display:grid; grid-template-columns: 180px auto">
+                        <div>
+                            @Helper.AvatarUser(message.User)
+                        </div>
+                        <div>
+                            @Helper.When(message.Creation)
+                        </div>
+                    </div>
+                    <div>
+                        @message.Text
+                    </div>
+                }
+            }
+        }
+
+    </div>
+</fieldset>
 

@@ -55,7 +55,16 @@ namespace MySpace.Controllers
         }
         public ActionResult AddMessage(int artistId, string message)
         {
-            return View();
+            Message _message = new Message
+            {
+                ArtistId = artistId,
+                Text = message,
+                UserId = OnlineUsers.CurrentUserId,
+                Creation = DateTime.Now
+            };
+            DB.AddArtistMessage(_message);
+            //RenewArtistSerialNumber();
+            return null;
         }
         public ActionResult ModifyPage(int id)
         {

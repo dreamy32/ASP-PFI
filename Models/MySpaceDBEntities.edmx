@@ -58,7 +58,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ArtistId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Text" Type="varchar" MaxLength="500" Nullable="false" />
@@ -114,7 +114,7 @@
           <Property Name="YoutubeId" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Creation" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Artists__UserId__14270015">
+        <Association Name="FK__Artists__UserId__3F115E1A">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Artists" Type="Self.Artists" Multiplicity="*" />
           <ReferentialConstraint>
@@ -126,7 +126,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FanLikes__Artist__160F4887">
+        <Association Name="FK__FanLikes__Artist__3E1D39E1">
           <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
           <End Role="FanLikes" Type="Self.FanLikes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -162,7 +162,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__Artist__17F790F9">
+        <Association Name="FK__Messages__Artist__503BEA1C">
           <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -174,7 +174,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__UserId__18EBB532">
+        <Association Name="FK__Messages__UserId__4F47C5E3">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -210,7 +210,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Videos__ArtistId__151B244E">
+        <Association Name="FK__Videos__ArtistId__3C34F16F">
           <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
           <End Role="Videos" Type="Self.Videos" Multiplicity="*" />
           <ReferentialConstraint>
@@ -234,11 +234,11 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Artists__UserId__14270015" Association="Self.FK__Artists__UserId__14270015">
+          <AssociationSet Name="FK__Artists__UserId__3F115E1A" Association="Self.FK__Artists__UserId__3F115E1A">
             <End Role="Users" EntitySet="Users" />
             <End Role="Artists" EntitySet="Artists" />
           </AssociationSet>
-          <AssociationSet Name="FK__FanLikes__Artist__160F4887" Association="Self.FK__FanLikes__Artist__160F4887">
+          <AssociationSet Name="FK__FanLikes__Artist__3E1D39E1" Association="Self.FK__FanLikes__Artist__3E1D39E1">
             <End Role="Artists" EntitySet="Artists" />
             <End Role="FanLikes" EntitySet="FanLikes" />
           </AssociationSet>
@@ -250,11 +250,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Logins" EntitySet="Logins" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__Artist__17F790F9" Association="Self.FK__Messages__Artist__17F790F9">
+          <AssociationSet Name="FK__Messages__Artist__503BEA1C" Association="Self.FK__Messages__Artist__503BEA1C">
             <End Role="Artists" EntitySet="Artists" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__UserId__18EBB532" Association="Self.FK__Messages__UserId__18EBB532">
+          <AssociationSet Name="FK__Messages__UserId__4F47C5E3" Association="Self.FK__Messages__UserId__4F47C5E3">
             <End Role="Users" EntitySet="Users" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
@@ -266,7 +266,7 @@
             <End Role="UserTypes" EntitySet="UserTypes" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Videos__ArtistId__151B244E" Association="Self.FK__Videos__ArtistId__151B244E">
+          <AssociationSet Name="FK__Videos__ArtistId__3C34F16F" Association="Self.FK__Videos__ArtistId__3C34F16F">
             <End Role="Artists" EntitySet="Artists" />
             <End Role="Videos" EntitySet="Videos" />
           </AssociationSet>

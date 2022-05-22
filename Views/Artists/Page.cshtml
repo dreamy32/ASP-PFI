@@ -14,7 +14,7 @@
 <script defer>
 
     let actionUrl = /Artists/ + "GetPage?artistId=" + @Model.Id;
-    let partialRefresh = new PartialRefresh(actionUrl, "ArtistPageContainer", 5, postRefreshCallback);
+    let partialRefresh = new PartialRefresh(actionUrl, "ArtistPageContainer", 5555, postRefreshCallback);
     $("#AddVideoForm").hide();
     function postRefreshCallback() {
         $("#AddVideo").click(function () {

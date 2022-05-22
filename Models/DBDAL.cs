@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MySpace.Models
 {
-    public static class DBDAL
+    public static partial class DBDAL
     {
         private static DbContextTransaction Transaction
         {

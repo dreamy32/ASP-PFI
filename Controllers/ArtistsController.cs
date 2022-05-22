@@ -119,5 +119,20 @@ namespace MySpace.Controllers
         {
             return View(DB.Artists.Find(id));
         }
+
+        [HttpPost]
+        public ActionResult ModifyPage(Artist ac)
+        {
+            if (ModelState.IsValid)
+            {
+                Artist artist = DB.Artists.Find(ac.Id);
+                //ac.CopyToUser(artist);
+                //DB.Update_User(artist);
+                return RedirectToAction("UserList");
+            }
+
+            return View(ac);
+        }
     }
+
 }

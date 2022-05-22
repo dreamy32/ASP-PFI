@@ -310,6 +310,7 @@
     <Content Include="Views\Artists\Index.cshtml" />
     <Content Include="Views\Artists\GetArtistsList.cshtml" />
     <Content Include="Views\Artists\GetPage.cshtml" />
+    <Content Include="Views\Artists\ModifyPage.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

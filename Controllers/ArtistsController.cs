@@ -125,8 +125,6 @@ namespace MySpace.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Artist artist = DB.Artists.Find(ac.Id);
-
                 DB.Update_Artist(ac);
                 return RedirectToAction("Page/" + ac.Id);
             }

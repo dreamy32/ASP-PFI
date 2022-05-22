@@ -22,6 +22,16 @@
 
 
     </div>*@
+<div style="display:grid; grid-template-columns: 40px auto">
+
+    @if (currentUser.Id == userId)
+    {
+        <div style="padding-top:25px;">
+            @Helper.GlyphiconAction($"ModifyPage/{artistId}", "glyphicon glyphiconStyle glyphicon-edit glyphicon-active", "Modifier votre page")
+        </div>
+    }
+    <div><h2>@Model.Name</h2></div>
+</div>
 <div>
     <div style="display:grid; grid-template-columns: 120px 120px 120px">
         <h4>@Model.Visits Visites</h4>
@@ -29,7 +39,7 @@
     </div>
     <div class="ArtistInfoLayout">
         <div>
-            @Helper.ImageBig(Model.MainPhotoGUID)
+            @Helper.ImageBig(Model.MainPhotoGUID, "ArtistImage")
         </div>
 
         <div class="ArtistDescription">

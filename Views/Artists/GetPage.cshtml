@@ -8,21 +8,36 @@
     DateTime currentMessageCreationDate = DateTime.Now;
 }
 <br />
+@*<div>
+        @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
+        {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
+    }
+        <h2>@Model.Name</h2>
+
+        @Model.Visits Visites
+        @Model.Likes Likes
+
+        <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
+        <p>@Model.Description</p>
+
+
+    </div>*@
 <div>
-    @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-    {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
-}
-    <h2>@Model.Name</h2>
+    <div style="display:grid; grid-template-columns: 120px 120px 120px">
+        <h4>@Model.Visits Visites</h4>
+        <h4>@Model.Likes Likes</h4>
+    </div>
+    <div class="ArtistInfoLayout">
+        <div>
+            @Helper.ImageBig(Model.MainPhotoGUID)
+        </div>
 
-    @Model.Visits Visites
-    @Model.Likes Likes
-
-    <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
-    <p>@Model.Description</p>
-
-
+        <div class="ArtistDescription">
+            @Model.Description
+        </div>
+    </div>
 </div>
-<br />
+
 <br />
 <fieldset>
     <legend>

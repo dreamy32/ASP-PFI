@@ -290,3 +290,15 @@
         <img class="youtubeThumbnail" src="@youtubeThumbnail" alt="" />
     </a>
 }
+@helper ImageBig(string image)
+{
+    var url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var imageUrl = url.Content(image);
+    <div>
+        <a href="@imageUrl" target="_blank">
+            <div class="photoBig"
+                 style="background: url(@imageUrl) no-repeat center center;">
+            </div>
+        </a>
+    </div>
+}

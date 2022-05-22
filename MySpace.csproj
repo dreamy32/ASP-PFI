@@ -139,6 +139,7 @@
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ArtistsDAL.cs" />
+    <Compile Include="Models\ArtistView.cs" />
     <Compile Include="Models\DBDAL.cs" />
     <Compile Include="Models\FanLike.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
@@ -312,7 +313,9 @@
     <Content Include="Views\Artists\GetPage.cshtml" />
     <Content Include="Views\Artists\ModifyPage.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ImagesData\ArtistImages\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

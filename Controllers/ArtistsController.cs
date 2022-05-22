@@ -9,26 +9,24 @@ namespace MySpace.Controllers
 {
     public class ArtistsController : Controller
     {
-        private const string serialNumber = "ArtistsSerialNumber";
+
         MySpaceDBEntities DB = new MySpaceDBEntities();
         #region PageSerialNumbers
-        public bool IsPageUpToDate => ((string)Session[serialNumber] == (string)HttpRuntime.Cache[serialNumber]);
-        public void RenewArtistsSerialNumber()
+        private const string serialNumber = "ArtistsSerialNumber";
+        public string GetArtistsSerialNumber
         {
-            HttpRuntime.Cache[serialNumber] = Guid.NewGuid().ToString();
-        }
-        public string GetArtistsSerialNumber()
-        {
-            if (HttpRuntime.Cache[serialNumber] == null)
+            get
             {
-                RenewArtistsSerialNumber();
+                if (HttpRuntime.Cache[serialNumber] == null)
+                {
+                    RenewArtistsSerialNumber();
+                }
+                return (string)HttpRuntime.Cache[serialNumber];
             }
-            return (string)HttpRuntime.Cache[serialNumber];
         }
-        public void SetLocalArtistsSerialNumber()
-        {
-            Session[serialNumber] = GetArtistsSerialNumber();
-        }
+        public bool IsPageUpToDate => ((string)Session[serialNumber] == (string)HttpRuntime.Cache[serialNumber]);
+        public void SetLocalArtistsSerialNumber() => Session[serialNumber] = GetArtistsSerialNumber;
+        public void RenewArtistsSerialNumber() => HttpRuntime.Cache[serialNumber] = Guid.NewGuid().ToString();
         #endregion
         public ActionResult Index()
         {
@@ -43,9 +41,15 @@ namespace MySpace.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetPage(int artistId)
+        public ActionResult GetPage(int artistId, bool forceRefresh = false)
         {
-            return PartialView(DB.Artists.Find(artistId));
+            if (forceRefresh || !IsPageUpToDate || OnlineUsers.NeedUpdate())
+            {
+                Artist artist = DB.Artists.Find(artistId);
+                SetLocalArtistsSerialNumber();
+                return PartialView(artist);
+            }
+            return null;
         }
         public ActionResult GroupEmail()
         {

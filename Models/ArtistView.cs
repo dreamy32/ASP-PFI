@@ -15,5 +15,7 @@ namespace MySpace.Models
             Messages = new HashSet<Message>();
             Videos = new HashSet<Video>();
         }
+
+
     }
 }

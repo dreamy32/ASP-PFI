@@ -8,20 +8,7 @@
     DateTime currentMessageCreationDate = DateTime.Now;
 }
 <br />
-@*<div>
-        @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-        {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
-    }
-        <h2>@Model.Name</h2>
 
-        @Model.Visits Visites
-        @Model.Likes Likes
-
-        <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
-        <p>@Model.Description</p>
-
-
-    </div>*@
 <div style="display:grid; grid-template-columns: 40px auto">
 
     @if (currentUser.Id == userId)

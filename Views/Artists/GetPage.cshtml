@@ -4,6 +4,7 @@
     MySpace.Models.Message currentMessage = Model.Messages.Where(pr => (pr.Id == Model.Id && pr.UserId ==
    currentUser.Id)).FirstOrDefault();
     int artistId = Model.Id;
+    int userId = Model.UserId;
     DateTime currentMessageCreationDate = DateTime.Now;
 }
 <br />
@@ -11,7 +12,7 @@
     @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
     {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
 }
-    <h2>@Model.Name + @artistId</h2>
+    <h2>@Model.Name</h2>
 
     @Model.Visits Visites
     @Model.Likes Likes
@@ -19,36 +20,55 @@
     <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
     <p>@Model.Description</p>
 
-    <fieldset style="width : 500px; height: 200px">
-        <legend>Vidéos youtube</legend>
-        @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-        {<span id="AddVideo" style="margin-left: 10px;">@Helper.GlyphiconNoAction("glyphicon-green glyphicon-plus", "ajouter un video")</span>}
-        <fieldset id="AddVideoForm" style="width: 280px;">
-            <legend>Ajout d'un vidéo YouTube</legend>
-            <input id="title" class="form-control" placeholder="Titre" style="margin-bottom:10px">
-            <input id="youtubeLink" class="form-control" placeholder="Lien Youtube" style="margin-bottom:10px">
-            <div style="display: grid; grid-template-columns:25px 25px; ">
-                <div id="AcceptVideoLink" artistid="9" class="glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer" title="Ajouter"></div>
-                <div id="CancelAddVideo" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer" title="Annuler"></div>
-            </div>
-        </fieldset>
-        <table>
-            @* chaque  3 video change tr *@
 
-            @foreach (var video in Model.Videos)
-            {
-                <tr>
-                    <td>@* video thumbnail *@</td>
-                </tr>
-            }
-        </table>
-    </fieldset>
 </div>
 <br />
 <br />
-
+<fieldset>
+    <legend>
+        Vidéos Youtube
+        @if (currentUser.Id == userId)
+        {
+            @Helper.GlyphiconNoAction("glyphicon glyphiconStyle glyphicon-plus glyphicon-green pointer", "Ajouter une vidéo", id: "AddVideo")
+        }
+    </legend>
+    <fieldset id="AddVideoForm" style="display:none; width:280px">
+        <legend>Ajout d'un vidéo YouTube</legend>
+        <input id="title" class="form-control" placeholder="Titre" style="margin-bottom:10px">
+        <input id="youtubeLink" class="form-control" placeholder="Lien Youtube" style="margin-bottom:10px">
+        <div style="display: grid; grid-template-columns:25px 25px; ">
+            @Helper.GlyphiconNoAction("glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer",
+            "Ajouter", id: "AcceptVideoLink", otherAttributes: $"artistid = {artistId}")
+            @Helper.GlyphiconNoAction("glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer",
+            "Annuler", id: "CancelAddVideo")
+        </div>
+    </fieldset>
+    <div class="videosContainer">
+        @{
+            IEnumerable<MySpace.Models.Video> videos = Model.Videos.OrderBy(v => v.Creation); ;
+            foreach (MySpace.Models.Video video in videos)
+            {
+                <div>
+                    @if (currentUser.Id == userId)
+                    {
+                        @Helper.GlyphiconConfirmAction($"RemoveVideo?videoId={video.Id}",
+                        "DeleteVideo glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer",
+                        $"Effacer {video.Title} ?")
+                    }
+                    @Helper.YoutubeThumbnail(video)
+                </div>
+            }
+        }
+    </div>
+</fieldset>
 <fieldset style="min-width: 320px;">
-    <legend>Messages @Helper.GlyphiconNoAction("glyphicon glyphiconStyle glyphicon-plus pointer", "Ajouter un message", id: "AddMessage")</legend>
+    <legend>
+        Messages
+        @if (currentUser.Id != userId)
+        {
+            @Helper.GlyphiconNoAction("glyphicon glyphiconStyle glyphicon-plus pointer", "Ajouter un message", id: "AddMessage")
+        }
+    </legend>
     <div id="PhotoRatingsContainer" class="PhotoRatingsContainer">
         <div id="currentUserMessageForm" style="margin-bottom:20px; display:none">
             <hr />

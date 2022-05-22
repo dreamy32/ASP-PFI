@@ -48,10 +48,35 @@ namespace MySpace.Controllers
         {
             return View();
         }
-        
+
         public ActionResult AddVideo(int artistId, string title, string link)
         {
-            return View();
+            string youtubeId = "";
+            if (link.Contains("https://www.youtube.com/watch?v="))
+            {
+                youtubeId = link.Replace("https://www.youtube.com/watch?v=", "");
+                if (youtubeId.IndexOf("&") > -1)
+                {
+                    youtubeId = youtubeId.Substring(0, youtubeId.IndexOf("&"));
+                }
+            }
+            if (youtubeId != "")
+            {
+                Video video = new Video
+                {
+                    Creation = DateTime.Now,
+                    ArtistId = artistId,
+                    Title = title,
+                    YoutubeId = youtubeId
+                };
+                DB.Add_Video(video);
+                //RenewArtistsSerialNumber();
+            }
+            return null;
+        }
+        public Action RemoveVideo(int videoId)
+        {
+            return null;
         }
         public ActionResult AddMessage(int artistId, string message)
         {
@@ -62,7 +87,7 @@ namespace MySpace.Controllers
                 UserId = OnlineUsers.CurrentUserId,
                 Creation = DateTime.Now
             };
-            DB.AddArtistMessage(_message);
+            DB.Add_Message(_message);
             //RenewArtistSerialNumber();
             return null;
         }

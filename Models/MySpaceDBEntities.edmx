@@ -108,7 +108,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ArtistId" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="YoutubeId" Type="varchar" MaxLength="100" Nullable="false" />
@@ -210,7 +210,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Videos__ArtistId__3C34F16F">
+        <Association Name="FK__Videos__ArtistId__634EBE90">
           <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
           <End Role="Videos" Type="Self.Videos" Multiplicity="*" />
           <ReferentialConstraint>
@@ -266,7 +266,7 @@
             <End Role="UserTypes" EntitySet="UserTypes" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Videos__ArtistId__3C34F16F" Association="Self.FK__Videos__ArtistId__3C34F16F">
+          <AssociationSet Name="FK__Videos__ArtistId__634EBE90" Association="Self.FK__Videos__ArtistId__634EBE90">
             <End Role="Artists" EntitySet="Artists" />
             <End Role="Videos" EntitySet="Videos" />
           </AssociationSet>

@@ -27,5 +27,31 @@ namespace MySpace.Models
             }
             return video;
         }
+
+        public static Artist Update_Artist(this MySpaceDBEntities DB, Artist artist)
+        {
+            DB.Entry(artist).State = EntityState.Modified;
+            DB.SaveChanges();
+            DB.Entry(artist).Reference(u => u.User).Load();
+            OnlineUsers.RenewSerialNumber();
+            return artist;
+        }
+
+        public static Artist Add_Artist(this MySpaceDBEntities DB, Artist artiste, User user)
+        {
+            artiste.Name = user.FirstName;
+            artiste.MainPhotoGUID = "~/Content/UI-icons/defaultUser.png";
+            artiste.Description = "Entrez une description";
+            artiste.Approved = false;
+            artiste.Likes = 0;
+            artiste.Visits = 0;
+            artiste.UserId = user.Id;
+            artiste.Id = DB.Artists.Count() + 1;
+            artiste = DB.Artists.Add(artiste);
+            DB.SaveChanges();
+            DB.Entry(artiste).Reference(u => u.User).Load();
+            OnlineUsers.RenewSerialNumber();
+            return artiste;
+        }
     }
 }

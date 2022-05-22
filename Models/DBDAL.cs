@@ -91,23 +91,6 @@ namespace MySpace.Models
             return user;
         }
 
-        public static Artist Add_Artist(this MySpaceDBEntities DB, Artist artiste, User user)
-        {
-            artiste.Name = user.FirstName;
-            artiste.MainPhotoGUID = "~/Content/UI-icons/defaultUser.png";
-            artiste.Description = "Entrez une description";
-            artiste.Approved = false;
-            artiste.Likes = 0;
-            artiste.Visits = 0;
-            artiste.UserId = user.Id;
-            artiste.Id = DB.Artists.Count() + 1;
-            artiste = DB.Artists.Add(artiste);
-            DB.SaveChanges();
-            DB.Entry(artiste).Reference(u => u.User).Load();
-            OnlineUsers.RenewSerialNumber();
-            return artiste;
-        }
-
         public static User Update_User(this MySpaceDBEntities DB, User user)
         {
             user.SaveAvatar();
@@ -118,6 +101,7 @@ namespace MySpace.Models
             OnlineUsers.RenewSerialNumber();
             return user;
         }
+
         public static bool RemoveUser(this MySpaceDBEntities DB, int userId)
         {
             User userToDelete = DB.Users.Find(userId);

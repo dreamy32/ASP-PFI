@@ -86,7 +86,7 @@
             </div>
         </div>
         @{
-            IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderBy(m => m.Creation); ;
+            IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderByDescending(m => m.Creation); ;
             foreach (MySpace.Models.Message message in messages)
             {
                 if (!message.User.Blocked)

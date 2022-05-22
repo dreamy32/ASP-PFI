@@ -15,12 +15,7 @@ namespace MySpace.Models
     public partial class Artist
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Artist()
-        {
-            this.FanLikes = new HashSet<FanLike>();
-            this.Messages = new HashSet<Message>();
-            this.Videos = new HashSet<Video>();
-        }
+        
     
         public int Id { get; set; }
         public int UserId { get; set; }

@@ -1,27 +1,16 @@
 ﻿@model MySpace.Models.Artist
 @{
-    MySpace.Models.User currentUser = MySpace.Models.OnlineUsers.GetSessionUser();
-    MySpace.Models.Message currentMessage = Model.Messages.Where(pr => (pr.Id == Model.Id && pr.UserId ==
-   currentUser.Id)).FirstOrDefault();
     int artistId = Model.Id;
     int userId = Model.UserId;
+    MySpace.Models.User currentUser = MySpace.Models.OnlineUsers.GetSessionUser();
+    MySpace.Models.Message currentMessage = Model.Messages.Where(m => (m.Id == Model.Id && m.UserId ==
+    currentUser.Id)).FirstOrDefault();
+    MySpace.Models.FanLike fanLike = Model.FanLikes.Where(
+        fl => fl.UserId == currentUser.Id && fl.ArtistId == artistId
+        ).FirstOrDefault();
     DateTime currentMessageCreationDate = DateTime.Now;
 }
 <br />
-@*<div>
-        @if (MySpace.Models.OnlineUsers.CurrentUserId == Model.UserId)
-        {@Helper.GlyphiconAction("ModifyPage/" + Model.Id, "glyphicon-edit", "modifier votre page");
-    }
-        <h2>@Model.Name</h2>
-
-        @Model.Visits Visites
-        @Model.Likes Likes
-
-        <img style="width: 300px; height: 300px" src=@Model.MainPhotoGUID.Replace('~', ' ')>
-        <p>@Model.Description</p>
-
-
-    </div>*@
 <div style="display:grid; grid-template-columns: 40px auto">
 
     @if (currentUser.Id == userId)
@@ -36,6 +25,17 @@
     <div style="display:grid; grid-template-columns: 120px 120px 120px">
         <h4>@Model.Visits Visites</h4>
         <h4>@Model.Likes Likes</h4>
+        @if (currentUser.Id != userId)
+        {
+            if (fanLike == null)
+            {
+                <h4 class="glyphicon glyphicon-thumbs-down" title="S'abonner" onclick="partialRefresh.confirmedCommand(`S'abonner?`, `/Artists/AddRemoveLike?artistId=${@artistId}`);"></h4>
+            }
+            else
+            {
+                <h4 class="glyphicon glyphicon-thumbs-up" title="Se désabonner" onclick="partialRefresh.confirmedCommand(`Se désabonner?`, `/Artists/AddRemoveLike?artistId=${@artistId}`);"></h4>
+            }
+        }
     </div>
     <div class="ArtistInfoLayout">
         <div>

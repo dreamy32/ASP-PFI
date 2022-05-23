@@ -27,6 +27,29 @@ namespace MySpace.Models
             }
             return video;
         }
+        #region FanLikes
+        public static FanLike Add_FanLike(this MySpaceDBEntities DB, FanLike fanLike)
+        {
+            if (fanLike != null)
+            {
+                fanLike = DB.FanLikes.Add(fanLike);
+                DB.SaveChanges();
+            }
+            return fanLike;
+        }
+        public static bool Remove_FanLike(this MySpaceDBEntities DB, FanLike fanLike)
+        {
+            if (fanLike != null)
+            {
+                BeginTransaction(DB);
+                DB.FanLikes.Remove(fanLike);
+                DB.SaveChanges();
+                Commit();
+                return true;
+            }
+            return false;
+        }
+        #endregion
 
         public static Artist Update_Artist(this MySpaceDBEntities DB, Artist artist)
         {
@@ -37,21 +60,20 @@ namespace MySpace.Models
             return artist;
         }
 
-        public static Artist Add_Artist(this MySpaceDBEntities DB, Artist artiste, User user)
+        public static Artist Add_Artist(this MySpaceDBEntities DB, Artist artist, User user)
         {
-            artiste.Name = user.FirstName;
-            artiste.MainPhotoGUID = "~/Content/UI-icons/defaultUser.png";
-            artiste.Description = "Entrez une description";
-            artiste.Approved = false;
-            artiste.Likes = 0;
-            artiste.Visits = 0;
-            artiste.UserId = user.Id;
-            artiste.Id = DB.Artists.Count() + 1;
-            artiste = DB.Artists.Add(artiste);
+            artist.Name = user.FirstName;
+            artist.MainPhotoGUID = "~/ImagesData/ArtistImages/No_Artist_Image.png";
+            artist.Description = "Entrez une description";
+            artist.Approved = false;
+            artist.Likes = 0;
+            artist.Visits = 0;
+            artist.UserId = user.Id;
+            artist = DB.Artists.Add(artist);
             DB.SaveChanges();
-            DB.Entry(artiste).Reference(u => u.User).Load();
+            DB.Entry(artist).Reference(u => u.User).Load();
             OnlineUsers.RenewSerialNumber();
-            return artiste;
+            return artist;
         }
     }
 }

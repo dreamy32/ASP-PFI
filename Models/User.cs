@@ -13,8 +13,7 @@ namespace MySpace.Models
     using System.Collections.Generic;
     
     public partial class User
-    {
-    
+    {    
         public int Id { get; set; }
         public int UserTypeId { get; set; }
         public string FirstName { get; set; }

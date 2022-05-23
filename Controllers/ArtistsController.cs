@@ -41,9 +41,11 @@ namespace MySpace.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetPage(int artistId, bool forceRefresh = false)
+        public ActionResult GetPage(int? artistId, bool forceRefresh = false)
         {
-            if (forceRefresh || !IsPageUpToDate || OnlineUsers.NeedUpdate())
+            if (artistId == null)
+                return RedirectToAction("Index");
+            else if (forceRefresh || !IsPageUpToDate || OnlineUsers.NeedUpdate())
             {
                 Artist artist = DB.Artists.Find(artistId);
                 SetLocalArtistsSerialNumber();
@@ -112,7 +114,7 @@ namespace MySpace.Controllers
                 Creation = DateTime.Now
             };
             DB.Add_Message(_message);
-            //RenewArtistSerialNumber();
+            RenewArtistsSerialNumber();
             return null;
         }
         public ActionResult ModifyPage(int id)
@@ -132,6 +134,28 @@ namespace MySpace.Controllers
             }
 
             return View(ac);
+        }
+        public ActionResult AddRemoveLike(int artistId)
+        {
+            FanLike fanLike = DB.FanLikes.Where(
+                fl => fl.UserId == OnlineUsers.CurrentUserId && fl.ArtistId == artistId
+                ).FirstOrDefault();
+            if (fanLike == null)
+            {
+                fanLike = new FanLike
+                {
+                    UserId = OnlineUsers.CurrentUserId,
+                    ArtistId = artistId,
+                    Creation = DateTime.Now
+                };
+                DB.Add_FanLike(fanLike);
+            }
+            else
+            {
+                DB.Remove_FanLike(fanLike);
+            }
+            RenewArtistsSerialNumber();
+            return null;
         }
     }
 

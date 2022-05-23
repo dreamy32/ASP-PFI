@@ -35,7 +35,7 @@
         
         <fieldset class="formField">
             <legend>@Html.DisplayNameFor(model => model.MainPhotoGUID)</legend>
-            @Helper.ImageUploader(Model.Id, Model.MainPhotoGUID, "MainPhotoGUID", Model.MainPhotoGUID, "Cliquez pour choisir votre avatar")
+            @Helper.ImageUploader(Model.Id, "~/Content/UI-icons/defaultUser.png", "MainPhotoGUID", Model.MainPhotoGUID, "Cliquez pour choisir votre avatar")
             @Html.ValidationMessageFor(model => model.MainPhotoGUID, "", new { @class = "text-danger" })
         </fieldset>
 

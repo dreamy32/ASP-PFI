@@ -49,6 +49,22 @@ namespace MySpace.Controllers
             {
                 Artist artist = DB.Artists.Find(artistId);
                 SetLocalArtistsSerialNumber();
+
+                List<int> listVisites = (List<int>)Session["VisitsHistory"];
+
+                if (listVisites == null)
+                {
+                    listVisites = new List<int>();
+                }
+
+                if (!listVisites.Contains((int)artistId))
+                {
+                    listVisites.Add((int)artistId);
+                    DB.Add_Visit(artistId); 
+                }
+
+                Session["VisitsHistory"] = listVisites;
+
                 return PartialView(artist);
             }
             return null;

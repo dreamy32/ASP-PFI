@@ -75,5 +75,11 @@ namespace MySpace.Models
             OnlineUsers.RenewSerialNumber();
             return artist;
         }
+
+        public static void Add_Visit(this MySpaceDBEntities DB, int? artistId)
+        {
+            DB.Artists.Find(artistId).Visits++;
+            DB.SaveChanges();
+        }
     }
 }

@@ -64,7 +64,6 @@ namespace MySpace.Controllers
                 }
 
                 Session["VisitsHistory"] = listVisites;
-
                 return PartialView(artist);
             }
             return null;

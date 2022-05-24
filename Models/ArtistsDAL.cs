@@ -28,21 +28,23 @@ namespace MySpace.Models
             return video;
         }
         #region FanLikes
-        public static FanLike Add_FanLike(this MySpaceDBEntities DB, FanLike fanLike)
+        public static FanLike Add_FanLike(this MySpaceDBEntities DB, FanLike fanLike, int artistId)
         {
             if (fanLike != null)
             {
                 fanLike = DB.FanLikes.Add(fanLike);
+                DB.Artists.Find(artistId).Likes++;
                 DB.SaveChanges();
             }
             return fanLike;
         }
-        public static bool Remove_FanLike(this MySpaceDBEntities DB, FanLike fanLike)
+        public static bool Remove_FanLike(this MySpaceDBEntities DB, FanLike fanLike, int artistId)
         {
             if (fanLike != null)
             {
                 BeginTransaction(DB);
                 DB.FanLikes.Remove(fanLike);
+                DB.Artists.Find(artistId).Likes--;
                 DB.SaveChanges();
                 Commit();
                 return true;

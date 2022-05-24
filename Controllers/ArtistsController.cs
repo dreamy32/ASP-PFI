@@ -161,11 +161,11 @@ namespace MySpace.Controllers
                     ArtistId = artistId,
                     Creation = DateTime.Now
                 };
-                DB.Add_FanLike(fanLike);
+                DB.Add_FanLike(fanLike, artistId);
             }
             else
             {
-                DB.Remove_FanLike(fanLike);
+                DB.Remove_FanLike(fanLike, artistId);
             }
             RenewArtistsSerialNumber();
             return null;

@@ -307,6 +307,7 @@
     <Content Include="Views\Artists\Index.cshtml" />
     <Content Include="Views\Artists\GetArtistsList.cshtml" />
     <Content Include="Views\Artists\GetPage.cshtml" />
+    <Content Include="Views\Artists\GroupEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ImagesData\ArtistImages\" />

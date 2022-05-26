@@ -267,4 +267,37 @@ namespace MySpace.Models
             return base.AuthorizeCore(httpContext);
         }
     }
+    public class ArtistAcess : AuthorizeAttribute
+    {
+        private bool RefreshTimeOut { get; set; }
+
+        public ArtistAcess(bool refreshTimeOut = true)
+        {
+            RefreshTimeOut = refreshTimeOut;
+        }
+
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            User sessionUser = OnlineUsers.GetSessionUser();
+            if (sessionUser != null && sessionUser.IsArtist)
+            {
+                if (OnlineUsers.SessionExpired(sessionUser.Id, RefreshTimeOut))
+                {
+                    OnlineUsers.RemoveSessionUser();
+                    httpContext.Response.Redirect("~/Accounts/Login?message=Session expirée!");
+                }
+                return true;
+            }
+            else if(sessionUser != null && sessionUser.IsAdmin)
+            {
+                httpContext.Response.Redirect("~/Artists/Index");
+            }
+            else
+            {
+                OnlineUsers.RemoveSessionUser();
+                httpContext.Response.Redirect("~/Accounts/Login?message=Acces illegal!");
+            }
+            return base.AuthorizeCore(httpContext);
+        }
+    }
 }

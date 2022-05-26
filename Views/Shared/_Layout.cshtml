@@ -29,6 +29,7 @@
                     if (currentUser.IsArtist)
                     {
                         @Helper.GlyphiconControllerAction("Artists", "Page/" + Session["artisteId"], "menu-Icon glyphicon-eye-open", "Voir votre page d'artiste...")
+                        @Helper.GlyphiconControllerAction("Artists", "GroupEmail", "menu-Icon glyphicon-envelope", "Courriel...")
                     }
                     if (currentUser.IsAdmin)
                     {

@@ -60,7 +60,7 @@ namespace MySpace.Controllers
                 if (!listVisites.Contains((int)artistId))
                 {
                     listVisites.Add((int)artistId);
-                    DB.Add_Visit(artistId); 
+                    DB.Add_Visit(artistId);
                 }
 
                 Session["VisitsHistory"] = listVisites;
@@ -68,10 +68,31 @@ namespace MySpace.Controllers
             }
             return null;
         }
+        #region GroupEmail
+        [ArtistAcess]
         public ActionResult GroupEmail()
         {
-            return View();
+            Artist artist = DB.Artists.Where(a => a.UserId == OnlineUsers.CurrentUserId).FirstOrDefault();
+            IEnumerable<User> fans = DB.FanLikes.Where(f => (f.ArtistId == artist.Id)).Select(fl => fl.User).ToList();
+            ViewBag.SelectedUsers = new List<int>();
+            ViewBag.Fans = fans;
+            return View(new GroupEmail());
         }
+
+        [HttpPost]
+        public ActionResult GroupEmail(GroupEmail groupEmail, List<int> SelectedUsers)
+        {
+            if (ModelState.IsValid)
+            {
+                groupEmail.SelectedUsers = SelectedUsers;
+                groupEmail.Send(DB);
+                return RedirectToAction("UserList");
+            }
+            ViewBag.SelectedUsers = SelectedUsers;
+            ViewBag.Users = DB.SortedUsers();
+            return View(groupEmail);
+        }
+        #endregion
         public ActionResult GetArtistsList(bool forceRefresh = false)
         {
             User currentUser = OnlineUsers.GetSessionUser();

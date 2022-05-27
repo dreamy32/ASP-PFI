@@ -30,6 +30,8 @@ namespace MySpace.Controllers
         #endregion
         public ActionResult Index()
         {
+            InitSearchByArtistName();
+            InitSortArtists();
             return View();
         }
         public ActionResult Page(int id)
@@ -102,13 +104,37 @@ namespace MySpace.Controllers
             }
             return null;
         }
+        public void InitSearchByArtistName()
+        {
+            if (Session["name"] == null)
+                Session["name"] = "";
+        }
         public ActionResult SetSearchArtistName(string name)
         {
-            return View();
+            Session["name"] = name.Trim().ToLower();
+            RenewArtistsSerialNumber();
+            return null;
+        }
+        public void InitSortArtists()
+        {
+            if (Session["ArtistFieldToSort"] == null)
+                Session["ArtistFieldToSort"] = "dates"; // "users", "ratings"
+            if (Session["ArtistFieldSortDir"] == null)
+                Session["ArtistFieldSortDir"] = false; // ascendant
         }
         public ActionResult SortArtistsBy(string fieldToSort)
         {
-            return View();
+            RenewArtistsSerialNumber();
+            if ((string)Session["ArtistFieldToSort"] == fieldToSort)
+            {
+                Session["ArtistFieldSortDir"] = !(bool)Session["RatingFieldSortDir"];
+            }
+            else
+            {
+                Session["ArtistFieldToSort"] = fieldToSort;
+                Session["ArtistFieldSortDir"] = true;
+            }
+            return null;
         }
 
         public ActionResult AddVideo(int artistId, string title, string link)

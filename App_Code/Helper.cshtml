@@ -167,21 +167,26 @@
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var avatarUrl = Url.Content(artist.User.GetAvatarURL());
     var linkUrl = Url.Action("Page/" + artist.Id, "Artists");
-    <td>
-        <a href="@linkUrl" data-toogle="tooltip" title='voir la page de @artist.Name'>
-            <div class="smallAvatar"
-                 style="background: url(@avatarUrl) no-repeat center center; background-size: cover;"></div>
-            <h3>@artist.User.FirstName @artist.User.LastName </h3>
-        </a>
-    </td>
-    <td>
-        @GlyphiconNoAction("blue glyphicon-eye-open", "nombre de visites")
-        @artist.Visits
-    </td>
-    <td>
-        @GlyphiconNoAction("blue glyphicon-thumbs-up", "nombre de likes")
-        @artist.Likes
-    </td>
+    <div style="height: 50px; font-size: 20px; color:#337ab7">
+        <div style="display:grid; grid-template-columns:260px 90px 40px 90px 40px">
+            <a href="@linkUrl" data-toogle="tooltip" title="Voir la page de @artist.User.GetFullName()">
+                <div style="display:grid; grid-template-columns: 60px 200px">
+                    <div class="smallAvatar"
+                         style="background: url(@avatarUrl) no-repeat center center; background-size: cover;">
+                    </div>
+                    <div style="margin-top:-25px" class="ellipsis">
+                        <h3>@artist.User.GetFullName()</h3>
+                    </div>
+                </div>
+            </a>
+
+            <div style="text-align: right; margin-top:-4px;">@artist.Visits &nbsp;</div>
+            <span style="font-size: 20px;" class="glyphicon glyphicon-eye-open"></span>
+            <div style="text-align: right; margin-top:-4px;">@artist.Likes &nbsp;</div>
+            <span style="font-size:20px;" class="glyphicon glyphicon-thumbs-up"></span>
+        </div>
+    </div>
+
 }
 
 @helper AvatarUser(MySpace.Models.User user)

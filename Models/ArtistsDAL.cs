@@ -56,6 +56,12 @@ namespace MySpace.Models
 
         public static Artist Update_Artist(this MySpaceDBEntities DB, Artist artist)
         {
+            //ImageGUIDReference AvatarReference =
+            // new ImageGUIDReference(@"/ImagesData/ArtistImages/", @"No_Artist_Image.png", false); // a modif ?
+
+            //var url = AvatarReference.GetURL(artist.MainPhotoGUID, false);
+            //artist.MainPhotoGUID = AvatarReference.SaveImage(url.Substring(26));
+
             DB.Entry(artist).State = EntityState.Modified;
             DB.SaveChanges();
             DB.Entry(artist).Reference(u => u.User).Load();
@@ -66,7 +72,7 @@ namespace MySpace.Models
         public static Artist Add_Artist(this MySpaceDBEntities DB, Artist artist, User user)
         {
             artist.Name = user.FirstName;
-            artist.MainPhotoGUID = artist.GetAvatarURL();
+            artist.MainPhotoGUID = "~/Images/Data/ArtistImages/No_Artist_Image.png";
             artist.Description = "Entrez une description";
             artist.Approved = false;
             artist.Likes = 0;

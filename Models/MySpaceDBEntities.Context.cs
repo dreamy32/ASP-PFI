@@ -22,7 +22,7 @@ namespace MySpace.Models
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            //throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<FriendShip> FriendShips { get; set; }

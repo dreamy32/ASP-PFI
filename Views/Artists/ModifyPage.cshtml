@@ -16,7 +16,6 @@
     @Html.HiddenFor(model => model.Visits)
     @Html.HiddenFor(model => model.Likes)
     @Html.HiddenFor(model => model.UserId)
-    @Html.HiddenFor(model => model.MainPhotoGUID)
 
 
 <div class="form-horizontal">
@@ -33,11 +32,11 @@
         </div>
     </div>
 
-    <fieldset class="formField">
-        <legend>@Html.DisplayNameFor(model => model.MainPhotoGUID)</legend>
-        @Helper.ImageUploader(Model.Id, Model.GetAvatarURL(), "Data", Url.Content("~/ ImagesData / Loading_icon.gif"), "Cliquez pour choisir votre avatar")
-        @Html.ValidationMessageFor(model => model.MainPhotoGUID, "", new { @class = "text-danger" })
-    </fieldset>
+        @Html.LabelFor(model => model.MainPhotoGUID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MainPhotoGUID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MainPhotoGUID, "", new { @class = "text-danger" })
+        </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })

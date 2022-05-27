@@ -66,7 +66,7 @@ namespace MySpace.Models
         public static Artist Add_Artist(this MySpaceDBEntities DB, Artist artist, User user)
         {
             artist.Name = user.FirstName;
-            artist.MainPhotoGUID = "~/ImagesData/ArtistImages/No_Artist_Image.png";
+            artist.MainPhotoGUID = artist.GetAvatarURL();
             artist.Description = "Entrez une description";
             artist.Approved = false;
             artist.Likes = 0;

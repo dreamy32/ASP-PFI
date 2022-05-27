@@ -198,6 +198,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\MySpaceDB.mdf" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -222,6 +223,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\oldSite.css" />
+    <Content Include="ImagesData\ArtistImages\No_Artist_Image.png" />
     <Content Include="ImagesData\Avatars\0e99d0c8-febb-4b40-ac49-7615fcf00d36.Jpeg" />
     <Content Include="ImagesData\Avatars\292bd2d9-4232-4568-820f-62ae8d857c80.Jpeg" />
     <Content Include="ImagesData\Avatars\f201b2e7-e332-4e65-988d-6456d3307201.Jpeg" />
@@ -308,10 +310,9 @@
     <Content Include="Views\Artists\GetArtistsList.cshtml" />
     <Content Include="Views\Artists\GetPage.cshtml" />
     <Content Include="Views\Artists\GroupEmail.cshtml" />
+    <Content Include="Views\Artists\ModifyPage.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ImagesData\ArtistImages\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

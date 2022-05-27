@@ -28,6 +28,16 @@ namespace MySpace.Models
             }
             return video;
         }
+        //function that remove a video similar to the one above
+        public static void Remove_Video(this MySpaceDBEntities DB, int videoId)
+        {
+            Video existingVideo = DB.Videos.Where(v => v.Id == videoId).FirstOrDefault();
+            if (existingVideo != null)
+            {
+                DB.Videos.Remove(existingVideo);
+                DB.SaveChanges();
+            }
+        }
         #region FanLikes
         public static FanLike Add_FanLike(this MySpaceDBEntities DB, FanLike fanLike, int artistId)
         {
@@ -83,6 +93,28 @@ namespace MySpace.Models
         {
             DB.Artists.Find(artistId).Visits++;
             DB.SaveChanges();
+        }
+        public static List<Artist> SearchArtistsByKeywords(List<Artist> artists, string keywords)
+        {
+            List<Artist> filteredArtists = new List<Artist>();
+            string[] keywordsArray = keywords.ToLower().Split(' ');
+
+            foreach (var artist in artists)
+            {
+                string artistText = (artist.Name + " " + artist.Description + artist.User.GetFullName()).ToLower();
+                bool containsAllTags = true;
+                foreach (var keyword in keywordsArray)
+                {
+                    if (!artistText.Contains(keyword))
+                    {
+                        containsAllTags = false;
+                        break;
+                    }
+                }
+                if (containsAllTags)
+                    filteredArtists.Add(artist);
+            }
+            return filteredArtists;
         }
     }
 }

@@ -76,9 +76,10 @@
                 <div>
                     @if (currentUser.Id == userId)
                     {
-                        @Helper.GlyphiconConfirmAction($"RemoveVideo?videoId={video.Id}",
-                        "DeleteVideo glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer",
-                        $"Effacer {video.Title} ?")
+                        <div id="deleteVideo" class="DeleteVideo glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer"
+                             title="Effacer @video.Title" style="position:relative; left:5px; top: 63px"
+                             onclick="partialRefresh.confirmedCommand(`Voulez-vous vraiment effacer @video.Title?`, `/Artists/RemoveVideo?videoId=@video.Id`)">
+                        </div>
                     }
                     @Helper.YoutubeThumbnail(video)
                 </div>

@@ -279,7 +279,7 @@ namespace MySpace.Models
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             User sessionUser = OnlineUsers.GetSessionUser();
-            if (sessionUser != null && sessionUser.IsArtist)
+            if (sessionUser != null && (sessionUser.IsArtist || sessionUser.IsAdmin))
             {
                 if (OnlineUsers.SessionExpired(sessionUser.Id, RefreshTimeOut))
                 {
@@ -287,10 +287,6 @@ namespace MySpace.Models
                     httpContext.Response.Redirect("~/Accounts/Login?message=Session expirée!");
                 }
                 return true;
-            }
-            else if(sessionUser != null && sessionUser.IsAdmin)
-            {
-                httpContext.Response.Redirect("~/Artists/Index");
             }
             else
             {

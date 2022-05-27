@@ -88,19 +88,61 @@ namespace MySpace.Controllers
             {
                 groupEmail.SelectedUsers = SelectedUsers;
                 groupEmail.Send(DB);
-                return RedirectToAction("UserList");
+                return RedirectToAction("Index");
             }
-            ViewBag.SelectedUsers = SelectedUsers;
-            ViewBag.Users = DB.SortedUsers();
+            Artist artist = DB.Artists.Where(a => a.UserId == OnlineUsers.CurrentUserId).FirstOrDefault();
+            IEnumerable<User> fans = DB.FanLikes.Where(f => (f.ArtistId == artist.Id)).Select(fl => fl.User).ToList();
+            ViewBag.SelectedUsers = new List<int>();
+            ViewBag.Fans = fans;
             return View(groupEmail);
         }
         #endregion
         public ActionResult GetArtistsList(bool forceRefresh = false)
         {
-            User currentUser = OnlineUsers.GetSessionUser();
-            if ((currentUser != null) && (forceRefresh || OnlineUsers.NeedUpdate()))
+            if (forceRefresh || !IsPageUpToDate || OnlineUsers.NeedUpdate())
             {
-                return PartialView(DB.Artists);
+                SetLocalArtistsSerialNumber();
+                List<Artist> artists = DB.Artists.OrderBy(a => a.Name).ToList();
+                string name = (string)Session["name"];
+                if (name != "")
+                    artists = DBDAL.SearchArtistsByKeywords(artists, name);
+                Response.Write($"<script>console.log('{(string)Session["ArtistFieldToSort"]}')</script>");
+                switch ((string)Session["ArtistFieldToSort"])
+                {
+                    case "names":
+                        if ((bool)Session["ArtistFieldSortDir"])
+                        {
+                            artists = artists.OrderBy(pr => pr.Name).ToList();
+                        }
+                        else
+                        {
+                            artists = artists.OrderByDescending(pr => pr.Name).ToList();
+                        }
+                        break;
+                    case "vues":
+                        if ((bool)Session["ArtistFieldSortDir"])
+                        {
+                            artists = artists.OrderBy(pr => pr.Visits).ToList();
+                        }
+                        else
+                        {
+                            artists = artists.OrderByDescending(pr => pr.Visits).ToList();
+                        }
+                        break;
+                    case "likes":
+                        if ((bool)Session["ArtistFieldSortDir"])
+                        {
+                            artists = artists.OrderBy(pr => pr.Likes).ToList();
+                        }
+                        else
+                        {
+                            artists = artists.OrderByDescending(pr => pr.Likes).ToList();
+                        }
+                        break;
+                    default: break;
+                }
+
+                return PartialView(artists);
             }
             return null;
         }
@@ -118,16 +160,16 @@ namespace MySpace.Controllers
         public void InitSortArtists()
         {
             if (Session["ArtistFieldToSort"] == null)
-                Session["ArtistFieldToSort"] = "dates"; // "users", "ratings"
+                Session["ArtistFieldToSort"] = "names"; 
             if (Session["ArtistFieldSortDir"] == null)
-                Session["ArtistFieldSortDir"] = false; // ascendant
+                Session["ArtistFieldSortDir"] = false; 
         }
         public ActionResult SortArtistsBy(string fieldToSort)
         {
             RenewArtistsSerialNumber();
             if ((string)Session["ArtistFieldToSort"] == fieldToSort)
             {
-                Session["ArtistFieldSortDir"] = !(bool)Session["RatingFieldSortDir"];
+                Session["ArtistFieldSortDir"] = !(bool)Session["ArtistFieldSortDir"];
             }
             else
             {
@@ -162,8 +204,10 @@ namespace MySpace.Controllers
             }
             return null;
         }
-        public Action RemoveVideo(int videoId)
+        public ActionResult RemoveVideo(int videoId)
         {
+            DB.Remove_Video(videoId);
+            RenewArtistsSerialNumber();
             return null;
         }
         public ActionResult AddMessage(int artistId, string message)

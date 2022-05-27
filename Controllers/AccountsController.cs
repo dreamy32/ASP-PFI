@@ -319,7 +319,7 @@ namespace MySpace.Controllers
                 }
                 Session["TimeZoneOffset"] = loginCredential.TimeZoneOffset + serverTimeZoneOffset;
                 Session["currentLoginId"] = DB.AddLogin(user.Id).Id;
-                return RedirectToAction("Index", "Application");
+                return RedirectToAction("Index", "Artists");
             }
             return View(loginCredential);
         }
